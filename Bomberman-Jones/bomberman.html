@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Boomberman</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>	
+	<div id="wrapper-play">
+		<h1>Bomberman JS</h1>
+		<form id="submit_name" action="">
+			<input id="name" type="text" name="name">
+			<input type="submit" name="play" value="Play Game">
+		</form>
+	</div>
+	<div id="wrapper-game">	
+		<div id="left-navigator">
+			<div id="time">
+				<span>Time Left</span>
+				<h2 class="time_left"></h2>
+			</div>
+			<div id="score">
+				<span>Score</span>
+				<h2 class="score"></h2>
+			</div>
+			<div id="stage">
+				<span>Stage</span>
+				<h1 class="stage"></h1>
+			</div>
+			<div id="life"></div>
+			<button id="control-pause" class="control_name" type="submit" name="pause" value="Pause">Pause</button>
+			<button id="control-restart" class="control_name" type="submit" name="restart" value="Restart">Restart</button>
+			<button id="control-quit" class="control_name" type="submit" name="quit" value="Quit">Quit</button>
+			<div id="game-over" class="hidden">
+				<h3>Game Over</h3>
+				<div>
+					<p>Do you want to restart the stage level?</p>
+					<button id="restart-yes" name="yes" value="yes">Yes</button>
+					<button id="restart-no" name="no" value="no">No</button>
+				</div>
+			</div>
+			<div id="game-clear" class="hidden">
+				<h3>Stage Complete</h3>
+				<div>
+					<p>Proceed to next level</p>
+					<button id="next-level" name="yes" value="ok">Ok</button>
+				</div>
+			</div>
+			<div id="game-quit" class="hidden">
+				<h3>Quit Game</h3>
+				<div>
+					<p>Are you sure?</p>
+					<button id="quit-yes" name="yes" value="yes">Yes</button>
+					<button id="quit-no" name="no" value="no">No</button>
+				</div>
+			</div>
+			<div id="game-pause">
+				<h1>Paused</h1>
+			</div>
+			<div id="game-final" class="hidden">
+				<h1>All Stage Complete!!</h1>
+				<button id="end" name="ok" value="ok">OK</button>
+			</div>
+		</div>
+
+		<div id="game">
+			<div id="bomberman"></div>
+			<div id="game-map"></div>
+		</div>
+	</div>
+<script type="text/javascript" src="assets/js/bomberman.js"></script>
+</body>
+</html>
