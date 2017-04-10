@@ -1,0 +1,353 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+
+
+#index{
+	width: 500px;	
+	margin: 0px auto;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid black;
+}
+
+#index form{
+	margin: 0px auto;
+	width: 200px;
+}
+
+#index form input[type='submit']{
+	margin-top: 20px;
+}
+
+#game_container{
+	display: table;
+	width: 100%;
+	margin: 0px auto;
+}
+
+#game_container #left_game_content {
+	border: 1px solid black;
+	// display: inline-block;
+	height: 600px;
+	text-align: center;
+	display: table-cell;
+	width: 20%;
+}
+
+#game_container #left_game_content #time_left{
+	height: 80px;
+	height: 100px;
+	border: 1px solid black;
+}
+
+#game_container #left_game_content #score{
+	height: 100px;
+	border: 1px solid black;
+
+}
+
+#game_container #left_game_content #stage{
+	height: 100px;
+	height: 100px;
+	border: 1px solid black;
+
+}
+
+#game_container #left_game_content #life{
+	height: 100px;
+	border: 1px solid black;
+}
+
+#game_container #left_game_content #options{
+	margin-top: 50px;
+}
+
+#game_container #left_game_content #options #continue_paused_button{
+	display: none;
+}
+
+#game_container #left_game_content #options button{
+	width: 160px;
+	display: block;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 17px;
+}
+	
+
+#game_container #main_game_content{
+	vertical-align: top;
+	// display: inline-block;
+	display: table-cell;
+	width: 80%;
+	height: 600px;
+}
+
+
+#main_game_content .row{
+	display: inline-block;
+}
+
+#main_game_content .walkable{
+	width: 50px;
+	height: 50px;
+}
+#main_game_content .walkable_2{
+	width: 50px;
+	height: 50px;
+}
+
+#main_game_content .undestroyable{
+	background-color: black;
+	height: 50px;
+	width: 50px;
+}
+
+#main_game_content .destroyable{
+	background-color: silver;
+	height: 50px;
+	width: 50px;
+}
+
+#main_game_content .flame{
+	border-radius: 50px;
+	background-color: yellow;
+	height: 50px;
+	width: 50px;
+}
+#main_game_content .flag{
+	background-color: green;
+	height: 50px;
+	width: 50px;
+}
+#main_game_content .small_enemy{
+	background-color: green;
+	height: 50px;
+	width: 50px;
+}
+#main_game_content .health{
+	background: url("../images/health.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	width: 50px;
+	height: 50px;
+}
+
+#main_game_content .speed{
+	background: url("../images/speed.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	width: 50px;
+	height: 50px;
+}
+
+#main_game_content .bomb_length{
+	background: url("../images/bomb_length.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 50px;
+	height: 50px;;
+}
+#main_game_content .carried_bomb{
+	background: url("../images/carried_bomb.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	width: 50px;
+	height: 50px;
+}
+
+#main_game_content .bomb{
+	background-color: red;
+	height: 50px;
+	width: 50px;
+}
+
+
+// #player{
+// 	background: url("../images/bomberman.gif");
+// 	background-repeat: no-repeat;
+// 	background-size: cover;
+// 	background-position: center;
+// 	position: relative;
+// 	width: 50px;
+// 	height: 50px;
+// }   
+
+
+#player{
+	background: url("../images/art-bomberman.gif");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	vertical-align: top;
+	position: absolute;
+} 
+
+.enemy{
+	background: url("../images/images.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	vertical-align: top;
+	position: absolute;
+}   
+#boss{
+	background: url("../images/Boss_5_Artwork.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	vertical-align: top;
+	position: absolute;
+	display: hidden;
+}   
+
+
+
+#paused_game_message{
+		border: 1px solid blue;
+		background-color: white;
+		width: 200px;
+		margin: 0px auto;
+		position: absolute;
+		text-align: center;
+		padding: 10px;
+		right: 850px;
+  	 	bottom: 550px;
+  	 	display: none;
+	}
+
+	#restart_level{
+		border: 1px solid blue;
+		background-color: white;
+		width: 200px;
+		margin: 0px auto;
+		position: absolute;
+		text-align: center;
+		padding: 10px;
+		right: 850px;
+  	 	bottom: 550px;
+  	 	display: none;
+	}
+
+	#restart_level span{
+		display: block;
+	}	
+	#restart_level button{
+		margin-top: 20px;
+		width: 60px;
+	}
+
+	#zero_time{
+		border: 1px solid blue;
+		background-color: white;
+		width: 200px;
+		margin: 0px auto;
+		position: absolute;
+		text-align: center;
+		padding: 10px;
+		right: 850px;
+  	 	bottom: 550px;
+  	 	display: none;
+	}
+
+
+	#zero_time span{
+		display: block;
+	}	
+	#zero_time button{
+		margin-top: 20px;
+		width: 60px;
+	}
+	#congrats{
+		border: 1px solid blue;
+		background-color: white;
+		width: 200px;
+		margin: 0px auto;
+		position: absolute;
+		text-align: center;
+		padding: 10px;
+		right: 850px;
+  	 	bottom: 550px;
+  	 	display: none;
+	}
+
+
+	#congrats span{
+		display: block;
+	}	
+	#congrats button{
+		margin-top: 20px;
+		width: 60px;
+	}
+	#final{
+		border: 1px solid blue;
+		background-color: white;
+		width: 200px;
+		margin: 0px auto;
+		position: absolute;
+		text-align: center;
+		padding: 10px;
+		right: 850px;
+  	 	bottom: 550px;
+  	 	display: none;
+	}
+
+
+	#final span{
+		display: block;
+	}	
+	#final button{
+		margin-top: 20px;
+		width: 60px;
+	}
+
+	#game_over{
+		border: 1px solid blue;
+		background-color: white;
+		width: 200px;
+		margin: 0px auto;
+		position: absolute;
+		text-align: center;
+		padding: 10px;
+		right: 850px;
+  	 	bottom: 550px;
+  	 	display: none;
+	}
+
+
+	#game_over span{
+		display: block;
+	}	
+	#game_over button{
+		margin-top: 20px;
+		width: 60px;
+	}
+}
+
+@media screen and (max-width: 1655px){
+	#game_container{
+		display: table !important;
+		width: 100% !important;
+	}
+
+	#game_container #left_game_content{
+		display: table-cell !important;
+		width: 20% !important;
+	}
+
+	#game_container #main_game_content{
+		display: table-cell !important;
+		width: 80% !important;
+	}
+}

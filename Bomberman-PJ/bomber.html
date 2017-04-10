@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1 minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Bomberman</title>
+	<link rel="stylesheet" href="assets/css/bomber.css">
+</head>
+<style>
+
+</style>
+<body>
+	<div id="index">
+		<h1>Bomberman JS</h1>
+
+		<form action="" id="form">
+			<input type="text" name="player_name" id="player_name">
+			<input type="submit" value="Play Game">
+		</form>
+	</div>
+	<!-- <div id="game" > -->
+	<div id="game" style="display:none">
+		<div id="game_container">
+			<div id="left_game_content">
+				<div id="time_left">
+					<h3>Time Left</h3>
+			
+					<span>3:59</span>
+				</div>
+				<div id="score">
+					<h3>Score</h3>
+					<span>213</span>
+				</div>
+				<div id="stage">
+					<h3>Stage</h3>
+					<span>I</span>
+				</div>
+				<div id="life">
+					<h3>Life Left</h3>
+					<span>1222</span>
+				</div>
+				<div id="options">
+					<button id="continue_paused_button">Continue</button>
+					<button id="pause">Pause</button>
+					<button id="restart">Restart</button>
+					<button id="quit">Quit</button>
+				</div>
+			</div>
+			<div id="boss"></div>
+			<div id="player"></div>
+			<div id="main_game_content"></div>
+			<div id="paused_game_message">
+				<h1>Paused</h1>
+			</div>
+			<div id="restart_level">
+				<h1>Restart Round</h1>
+				<span>Do you want to restart the stage level?</span>
+				<button id="is_not_restart">No</button>
+				<button id="is_restart">Yes</button>
+			</div>
+			<div id="game_over">
+				<h1>Quit</h1>
+				<span>Do you want to quit?</span>
+				<button id="is_not_game_over">No</button>
+				<button id="is_game_over">Yes</button>
+			</div>
+			<div id="zero_time">
+				<h1>Game over</h1>
+				<span>Do you want to quit?</span>
+				<button id="is_not_zero_time">No</button>
+				<button id="is_zero_time">Yes</button>
+			</div>
+			<div id="congrats">
+				<h1>Congrats</h1>
+				<span>Do you want to continue?</span>
+				<button id="congrats_quit">QUIT</button>
+				<button id="congrats_yes">Yes</button>
+			</div>
+			<div id="final">
+				<h1>Congrats</h1>
+				<span> U FINISH THE GAME </span>
+				<button id="final_quit">QUIT</button>
+			</div>
+		</div>
+	</div>
+    <script src="assets/js/bomber.js"></script>
+	
+</body>
+</html>
