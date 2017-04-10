@@ -1,0 +1,195 @@
+*{
+	margin: 0px;
+}
+#wrapper-play{
+	width: 500px;
+	height: 300px;
+	margin: 0px auto;
+}
+#wrapper-play h1{
+	font-size: 70px;
+	margin-top: 200px;
+}
+#wrapper-play input:first-child{
+	width: 300px;
+}
+#wrapper-play input{
+	display: block;
+	margin: 10px auto;
+}
+#left-navigator{
+	width: 100px;
+	height: 658px;
+	border: 1px solid black;
+	display: inline-block;
+}
+#game{
+    height: 660px;
+    width: 1240px;
+	display: inline-block;
+	vertical-align: top;
+}
+#game, #left-navigator{
+	vertical-align: top;
+}
+#score,#stage,#time{
+	border: 1px solid black;
+	height: 90px;
+	text-align: center;
+	padding: 5px;
+}
+#life{
+	border: 1px solid black;
+	text-align: center;
+	font-size: 20px;
+	height: 25px;
+	overflow-y: hidden;
+}
+#left-navigator #control-pause{
+	margin-top: 130px;
+}
+#left-navigator button{
+	margin: 25px auto;
+	display: block;
+	width: 80px;
+	height: 30px;
+}
+#game-pause, #game-final{
+    bottom: 350px;
+    left: 550px;
+    opacity: 1 !important;
+    position: absolute;
+    text-align: center;
+    z-index: 10;
+}
+#game-pause h1{
+    border: 1px solid black;
+    text-align: center;
+    padding: 10px 50px;
+    font-size: -webkit-xxx-large;
+    background-color: white;
+}
+
+#game-final{
+    height: 100px;
+    padding: 20px;
+    border: 1px solid black;
+    background: white;
+}
+
+#game-over, #game-quit,  #game-clear{
+    background-color: white;
+    border: 1px solid black;
+    bottom: 400px;
+    display: block;
+    height: 150px;
+    left: 550px;
+    margin: 0px auto;
+    opacity: 1 !important;
+    position: relative;
+    text-align: center;
+    width: 300px;
+    z-index: 10;
+}
+#game-over button, #game-quit button, #game-clear button, #game-final butt{
+    margin: 25px 20px;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+#game-over h3, #game-quit h3, #game-clear h3{
+	padding-top: 30px;
+}
+#game-quit{
+    bottom: 700px;	
+}
+#game-clear{
+    bottom: 550px;
+}
+.hidden{
+    visibility: hidden;
+}
+.unbreakable{
+	background-color: brown;
+	width: 38px !important;
+	height: 38px !important;
+	border: 1px solid silver;
+}
+.breakable{
+	background-color: green;
+	width: 38px !important;
+	height: 38px !important;
+	border: 1px solid silver;
+}
+.nobox{
+
+}
+#bomberman{
+	background-image: url('../images/bomberman.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 50px;
+	height: 40px;
+	position: absolute;
+}
+.wall div{
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+}
+.wall{
+	vertical-align: top;
+	padding: 0px;
+	margin: 0px;
+	height: 40px;
+}
+.bombs{
+	background-image: url('../images/bomb.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.explosion{
+	background-color: red;
+	border-radius: 10px;
+}
+.life_ups{
+	background-image: url('../images/life.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.add_bomb{
+	background-image: url('../images/ups1.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.range_bomb{
+	background-image: url('../images/ups2.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.bomb_walk{
+	background-image: url('../images/walk.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.enemy{
+	background-image: url('../images/enemy.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 40px;
+	position: absolute;
+	width: 40px;
+}
+#flag{
+	background-image: url('../images/flag.gif');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#boss{
+	background-image: url('http://emojis.slackmojis.com/emojis/images/1469223471/679/charmander_dancing.gif?1469223471');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 40px;
+	position: absolute;
+	width: 40px;
+}
