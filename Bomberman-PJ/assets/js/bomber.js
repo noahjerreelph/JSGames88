@@ -81,6 +81,7 @@ document.getElementById("quit").onclick = function(){
 };
 document.getElementById("is_not_game_over").onclick = function(){
 	document.getElementById("game_over").style.display = "none";
+	game_info.new_stage(true);
 };
 document.getElementById("is_restart").onclick = function(){
 	game_info.new_stage(true);
