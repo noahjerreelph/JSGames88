@@ -1,0 +1,33 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+
+#login_dashboard{
+	width: 200px;
+	margin: 0px auto;
+	text-align: center;
+}
+#login_dashboard input[type='submit']{
+	width: 80px;
+	margin-top: 10px;
+	height: 25px;
+	display: inline-block;
+}
+
+#login_dashboard  #user_highscore{
+	border: 1px solid black;
+	height: 100%;
+}
+
+#login_dashboard  #user_highscore table{
+	height: 100%;
+}
+#login_dashboard  #user_highscore table th{
+	width: 100px;
+}
+
+#login_dashboard  #user_highscore button{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Snek</title>
+	<link rel="stylesheet" href="assets/index.css">
+
+</head>
+<body>
+	<div id="login_dashboard">
+		<h1>Snek JS</h1>
+		<form action="">
+			<input type="text" name="user_name" id="user_name">
+			<input type="submit" value="Start" id="start_game">
+			<input type="submit" value="HighScore" id="show_highscore">
+		</form>
+
+		<div id="user_highscore" style="display: none">
+			<h1>High Score</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Player</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody id="user_score">
+				</tbody>
+			</table>
+
+			<button id="score_close">Close</button>
+			<button id="score_reset">Reset</button>
+		</div>
+	</div>
+</body>
+
+<script src="assets/index.js"></script>
+</html>
