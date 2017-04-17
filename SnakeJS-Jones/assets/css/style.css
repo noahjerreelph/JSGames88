@@ -1,0 +1,42 @@
+*{
+	margin: 0px;
+}
+#wrapper-login, #highscore{
+	margin: 0px auto;
+	width: 400px;
+	text-align: center;
+}
+#wrapper-login h1{
+	font-size: 70px;
+	margin-top: 200px;
+}
+#wrapper-login div input{
+	margin: 10px 20px;
+}
+#wrapper-login #player_name{
+	width: 300px;
+}
+#highscore{
+	border: 1px solid black;
+	height: 350px;
+    position: fixed;
+    top: 150px;
+    left: 500px;
+}
+#highscore table{
+	width: 400px;
+}
+#highscore div{
+	margin-top: 30px;
+}		
+#highscore a{
+	text-decoration: none;
+	color: black;
+	padding: 2px 15px;
+	border: 1px solid #A6A6A6;
+	background-color: #F2F2F2;
+	margin: 0px 30px;
+}
+.hidden{
+	visibility: hidden;
+}
