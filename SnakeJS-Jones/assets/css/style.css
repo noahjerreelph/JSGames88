@@ -19,23 +19,93 @@
 #highscore{
 	border: 1px solid black;
 	height: 350px;
-    position: fixed;
+    position: absolute;
     top: 150px;
     left: 500px;
+    padding: 10px;
 }
 #highscore table{
 	width: 400px;
 }
+#highscore table thead{
+	font-weight: bold;
+	font-size: 20px;
+}
 #highscore div{
-	margin-top: 30px;
+	height: 300px;
 }		
-#highscore a{
+#highscore a, #quit a, #restart a{
 	text-decoration: none;
 	color: black;
 	padding: 2px 15px;
 	border: 1px solid #A6A6A6;
 	background-color: #F2F2F2;
 	margin: 0px 30px;
+}
+#wrapper-game{
+	position: relative;
+}
+header{
+	border: 1px solid black;
+	padding: 10px;
+	background-color: #CCCCCC;
+}
+header h3, header span, header div{
+	display: inline-block;
+	margin-right: 20px; 
+}
+header div{
+	margin-left: 70%;
+}
+header a{
+	vertical-align: top;
+	margin: 0px 15px;
+	color: black;
+	text-decoration: none;
+}
+#quit, #restart, #pause{
+	border: 1px solid black;
+	padding: 20px;
+	position: relative;
+	text-align: center;
+	width: 300px;
+    top: 200px;
+    height: 100px;
+    left: 530px;
+    background-color: white;
+}
+#quit h3, #quit p, #restart h3, #restart p{
+	padding: 5px;
+}
+#quit div, #restart div{
+	margin-top: 10px;
+}
+#pause h1{
+	font-size: 50px;
+}
+#score_board{
+	background-color: silver;
+	display: inline-block;
+	height: 500px;
+	margin: 10px;
+	opacity: .5;
+	position: absolute;
+	top: 0px;
+	vertical-align: top;
+	width: 150px;
+    right: 0px;
+    padding: 10px;
+}
+#score_board table{
+	width: 100%;
+}
+#wrapper-game{
+	width: 99.8%;
+	height: 610px;
+	border: 1px solid black;
+	position: absolute;
+    top: 45px;
+    background-color: lightgreen;
 }
 .hidden{
 	visibility: hidden;

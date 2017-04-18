@@ -6,6 +6,15 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+	<header class="hidden">
+		<h3>Snake JS</h3>
+		<span>Stage 1</span>
+		<div>
+			<button id="btn-pause">Pause</button>
+			<button id="btn-restart">Restart</button>
+			<button id="btn-quit">Quit</button>
+		</div>
+	</header>
 	<div id="wrapper-login">
 		<h1>Snake JS</h1>
 		<form id="submit_name" action="">
@@ -17,81 +26,19 @@
 		</form>
 	</div>
 	<div id="highscore" class="hidden">
-		<h2>High Score</h2>
-		<table>
-			<thead>
-				<td><h3>Player</h3></td>
-				<td><h3>Score</h3></td>
-			</thead>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-			<tr>
-				<td>Player1</td>
-				<td>20000</td>
-			</tr>
-		</table>
 		<div>
+			<h2>High Score</h2>
+			<table></table>
+		</div>
 			<a id="clear_score" href="#">Clear</a>
 			<a id="close" href="#">Close</a>				
+	</div>
+	<div id="wrapper-game" class="hidden">
+		<div id="score_board">
+			<table></table>
 		</div>
 	</div>
-	<script>
-		var val = "", player = {};
-		document.getElementById('play').addEventListener('click', function(){
-			val = this.value;
-		});
-		document.getElementById("submit_name").addEventListener("submit", function(evt){
-			var playername = document.getElementById("player_name").value;
-			evt.preventDefault();
-			if(val == "Play Game"){
-				document.getElementById('wrapper-login').setAttribute('class','hidden');
-			}
-			else{
-				document.getElementById('wrapper-login').setAttribute('class','hidden');
-				document.getElementById('highscore').removeAttribute('class');				
-			}
-		});
-		document.getElementById("clear_score").addEventListener('click', function(){
-			player = {};
-		});
-		document.getElementById("close").addEventListener('click', function(){
-			document.getElementById('highscore').setAttribute('class','hidden');
-			document.getElementById('wrapper-login').removeAttribute('class');			
-		});
-	</script>
+
+	<script src="assets/js/snake.js"></script>
 </body>
 </html>
