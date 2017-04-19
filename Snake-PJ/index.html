@@ -7,7 +7,7 @@
 
 </head>
 <body>
-	<div id="login_dashboard">
+	<div id="login_dashboard" >
 		<h1>Snek JS</h1>
 		<form action="">
 			<input type="text" name="user_name" id="user_name">
@@ -32,7 +32,61 @@
 			<button id="score_reset">Reset</button>
 		</div>
 	</div>
+	<div id="game_dashboard" style="display:none">
+		<div id="game_container_header">
+			<div id="game_header_left">
+				<h1>SnekJS</h1>
+				<span id="game_stage">Stage 1</span>
+			</div>
+			<div id="game_header_right">
+				<a href="#" id="continue_game" style="display:none">Resume</a>
+				<a href="#" id="pause_game">Pause</a>
+				<a href="#" id="restart_game">Restart</a>
+				<a href="#" id="quit_game">Quit</a>
+			</div>	
+		</div>
+		<div id="game_container_main"></div>
+		<div id="player_data">
+		</div>
+		<div id="game_score_container">
+			<h1>High Score</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Player</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody id="in_game_score">
+				</tbody>
+			</table>
+		</div>
+		<div id="player_paused" style="display:none">
+			<h1>Game Paused</h1>
+			.
+		</div>
+		<div id="player_restart" style="display:none">
+			<h1>Restart Game</h1>
+			<p>Are you sure you want to restart the game?</p>
+			<button id="player_restart_yes">Yes</button>	
+			<button id="player_restart_no">No</button>	
+		</div>
+		<div id="player_quit" style="display:none">
+			<h1>Quit Game</h1>
+			<p>Are you sure you want to quit the game?</p>
+			<button id="player_quit_yes">Yes</button>	
+			<button id="player_quit_no">No</button>	
+		</div>
+		<div id="proceed_next_stage" style="display:none">
+			<h1>Proceed to next stage?</h1>
+			<button id="player_proceed_yes">Yes</button>	
+			<button id="player_proceed_no">No</button>	
+		</div>
+		<div id="congrats" style="display:none">
+			<h1>Congrats!</h1>
+			<button id="congrats_quit">Quit</button>	
+		</div>
+	</div>
 </body>
-
 <script src="assets/index.js"></script>
 </html>
