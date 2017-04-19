@@ -100,12 +100,12 @@ header a{
 	width: 100%;
 }
 #wrapper-game{
-	width: 99.8%;
+	width: 99.35%;
 	height: 610px;
-	border: 1px solid black;
+	border: 5px solid black;
 	position: absolute;
     top: 45px;
-    background-color: lightgreen;
+    background-color: black;
 }
 .hidden{
 	visibility: hidden;
