@@ -10,6 +10,7 @@ var food = new food();
 		document.getElementById("start_game").onclick = function(){
 			player.user_name = document.getElementById("user_name").value;
 			if(player.user_name != ""){
+				player.player_body();
 				player.x = 3.5;
 				player.y = 3;
 				player.length = 3;
@@ -165,10 +166,10 @@ var food = new food();
 			player.score = 0;
 			for (var i = 0; i < game.map.length; i++) {
 				for (var k = 0; k < game.map[i].length; k++) {
-		           	if (game.map[i][k] == 5) game.map[i][k] = 0;
-		           	else if (game.map[i][k] == 99) game.map[i][k] = 0;
-		           	else if (game.map[i][k] == 98) game.map[i][k] = 0;
-		           	else if (game.map[i][k] == 97) game.map[i][k] = 0;
+		           	if (game.map[i][k] != 1) game.map[i][k] = 0;
+		           	// else if (game.map[i][k] == 99) game.map[i][k] = 0;
+		           	// else if (game.map[i][k] == 98) game.map[i][k] = 0;
+		           	// else if (game.map[i][k] == 97) game.map[i][k] = 0;
 				}
 			}
 
@@ -186,7 +187,6 @@ var food = new food();
 			player.movement(e);
 	}
 /* End of Prototype Feature */
-
 /* player function */
 	function player(){
 		this.user_name;
@@ -198,57 +198,113 @@ var food = new food();
 		this.old_x;
 		this.old_y;
 		this.is_new_game = false;
-		this.direction = "right";	
-		/* display player in front end*/
-		this.display_player = function(){
-			var container = document.getElementById('player_data');
-			var firstChild = container.childNodes[0];
-
-	        for (var i = this.length- 1; i >= 0; i--) {
-				if (container && firstChild && i != 0) {
-					var newDiv = document.createElement('div');
-					newDiv.setAttribute("id", "player_tail_"+i);
-					newDiv.setAttribute("player_tail_id",i);
-					newDiv.setAttribute("class", "player");
-					container.appendChild(newDiv, container);    
-				}
-				else{
-					var newDiv = document.createElement('div');
-					newDiv.setAttribute("id", "player_head_"+i);
-					newDiv.setAttribute("player_head_id", i);
-					newDiv.setAttribute("class", "player");
-					container.appendChild(newDiv, container);    
+		this.direction = "right";
+		this.player_body = function(x = null,y = null, index = null){
+			var test = [];
+			for (var i = 0; i < player.length; i++) {
+				test[((index == null) ? i : index) ] = {
+					x : ((x == null) ? 0 : x) ,
+					y : ((y == null) ? 0 : y) 
 				}
 			}
+
+			return test;
 		}
+
+		/* display player in front end*/
+		this.display_player = function(){
+			// var container = document.getElementById('player_data');
+			// var firstChild = container.childNodes[0];
+
+	  //       for (var i = this.length - 1; i >= 0; i--) {
+			// 	if (container && firstChild && i != 0) {
+			// 		var newDiv = document.createElement('div');
+			// 		newDiv.setAttribute("id", "player_tail_"+i);
+			// 		newDiv.setAttribute("player_tail_id",i);
+			// 		newDiv.setAttribute("class", "player");
+			// 		container.appendChild(newDiv, container);    
+			// 	}
+			// 	else{
+			// 		var newDiv = document.createElement('div');
+			// 		newDiv.setAttribute("id", "player_head_"+i);
+			// 		newDiv.setAttribute("player_head_id", i);
+			// 		newDiv.setAttribute("class", "player");
+			// 		container.appendChild(newDiv, container);    
+			// 	}
+			// }
+		}
+
 		/* end of display player in front end*/
 
 		/* show where location of player */
 		this.show_player = function(){
-			document.getElementById("player_head_0").style.left  = this.x * 30+"px";
-			document.getElementById("player_head_0").style.top   = this.y * 30+"px";
+			player_body_temp = player.player_body();
+			var last_loc = { x:player.player_body(x,null,0)[0].x, y: player.player_body(null,y,0)[0].y };
+			var container = document.getElementById('player_data');
+			var firstChild = container.childNodes[0];
+
+			console.log(last_loc.x);
+
+			for (var i = 0; i < player.length; i++) {
+				if(i == 0){
+					var newDiv = document.createElement('div');
+					newDiv.setAttribute("id", "player_head_"+i);
+					newDiv.setAttribute("player_head_id", i);
+					newDiv.setAttribute("class", "player");
+					container.appendChild(newDiv, container);  
+				}
+				else{	
+					var temp_loc = player_body_temp[i];
+					// console.log(temp_loc)
+
+					player_body_temp[i] = {
+						x : last_loc.x,
+						y : last_loc.y
+					}
+
+					last_loc = temp_loc;
+
+					var newDiv = document.createElement('div');
+					newDiv.setAttribute("id", "player_tail_"+i);
+					newDiv.setAttribute("player_tail_id",i);
+					newDiv.setAttribute("class", "player");
+					container.appendChild(newDiv, container);   
+				}
+			}
+			
+			document.getElementById("player_head_0").style.left = this.x * 30+"px";
+			document.getElementById("player_head_0").style.top  = this.y * 30+"px";
+
+			for (var i = 1; i < player_body_temp.length; i++) {
+				console.log(player_body_temp)
+				if( player_body_temp[i]){
+					document.getElementById("player_tail_" + i).style.left = player_body_temp[i].x * 30+"px";
+					document.getElementById("player_tail_" + i).style.top  = player_body_temp[i].y * 30+"px";
+				}
+			}
 		};
 		/*end of show where location of player */
 
 		/* show player body */
-		this.show_player_body = function(){
-			var	player_body_location  = []
-			var head_x = this.x;
-			var head_y = this.y;
+		// this.show_player_body = function(){
+		// 	var last_loc = { x: player.player_body[0].x, y: player.player_body[0].y };
+		// 	/* length of */
+		// 	for (var i = 1; i < player.length; i++) {
+		// 		var temp_loc = player.player_body[i];
 
-			for (var i = 1; i < player.length; i++) {
-				player_body_location.push({
-					x : head_x - i,
-					y : head_y,
-				})
-			}
+		// 		player.player_body[i] = {
+		// 			x : last_loc.x,
+		// 			y : last_loc.y,
+		// 		}
 
-			for (var i = 1; i < player_body.length; i++) {
-				document.getElementById("player_tail_"+i).style.left = (this.prev_x - i) * 30+"px";
-				document.getElementById("player_tail_"+i).style.top  = (this.prev_y) * 30+"px";
-			}	
-			console.log(player_body_location)
-		};
+		// 		last_loc = temp_loc;
+		// 	}
+
+		// 	for (var i = 1; i < player.player_body.length; i++) {
+		// 		document.getElementById("player_tail_" + i).style.left = (player.player_body[i].x) * 30+"px";
+		// 		document.getElementById("player_tail_" + i).style.top  = (player.player_body[i].y) * 30+"px";
+		// 	}
+		// };
 		/* end of show player body */
 
 
@@ -324,6 +380,12 @@ function game(){
 		/* game start using interval time */
 		var game_timer = setInterval(function(){
 			if(!game.paused){
+				player_body_temp = player.player_body();
+				player_body_temp[0].x = player.x;
+				player_body_temp[0].y = player.y;
+				console.log(player_body_temp)
+				
+
 				/* auto adding of direction of player*/
 				if(player.direction == "left")
 					player.x--;
@@ -335,6 +397,92 @@ function game(){
 					player.y++;	
 				/*end of  auto adding of direction of player*/
 
+
+				var snakes = enemy.snake_data;
+				for (var i = 0; i < snakes.length; i++) {
+					enemy_movement = Math.floor((Math.random() * 4) + 1);
+					if (enemy_movement == 1 && snakes[i].direction != "right"){
+						snakes[i].direction = "left";
+					}
+					else if (enemy_movement == 2 && snakes[i].direction != "down"){
+						snakes[i].direction = "up";
+					}
+					else if (enemy_movement == 3 && snakes[i].direction != "left"){
+						snakes[i].direction = "right";
+					}
+					else if (enemy_movement == 4 && snakes[i].direction != "up"){
+						snakes[i].direction = "down";
+					}
+
+					if (snakes[i].direction == "left"){
+						snakes[i].x--;
+					}
+					if (snakes[i].direction == "up"){
+						snakes[i].y--;
+					}
+					if (snakes[i].direction == "right"){
+						snakes[i].x++;
+					}
+					if (snakes[i].direction == "down"){
+						snakes[i].y++;
+					}
+				}
+
+				for (var i = 0; i < snakes.length; i++) {
+					if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 1){
+						if (enemy_movement == 1 && snakes[i].direction != "right"){
+							snakes[i].direction = "left";
+						}
+						else if (enemy_movement == 2 && snakes[i].direction != "down"){
+							snakes[i].direction = "up";
+						}
+						else if (enemy_movement == 3 && snakes[i].direction != "left"){
+							snakes[i].direction = "right";
+						}
+						else if (enemy_movement == 4 && snakes[i].direction != "up"){
+							snakes[i].direction = "down";
+						}
+
+						if (snakes[i].direction == "left"){
+							snakes[i].x--;
+						}
+						if (snakes[i].direction == "up"){
+							snakes[i].y--;
+						}
+						if (snakes[i].direction == "right"){
+							snakes[i].x++;
+						}
+						if (snakes[i].direction == "down"){
+							snakes[i].y++;
+						}
+					}
+
+
+					/*enemy get food, big food, multiplier, big score*/
+					if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 5){
+						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+						snakes[i].score = snakes[i].score + (10 * snakes[i].multiplier);
+						snakes[i].length = snakes[i].length + 1;
+					}
+					else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 99){
+						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+						snakes[i].score = snakes[i].score + 10;
+						snakes[i].length = snakes[i].length + 5;
+					}
+					else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 98){
+						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+						snakes[i].score = snakes[i].score + 10;
+						snakes[i].multiplier = snakes[i].multiplier + 1;
+					}
+					else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 97){
+						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+						snakes[i].score = snakes[i].score + 100;
+					}
+					/*end of enemy get food, big food, multiplier, big score*/
+				}
+
+				enemy.show_enemy();
+
 				/* player hit wall , show modal of quit*/
 				if(game.map[player.x - 0.5][player.y - 2] == 1){
 					game.paused = true;
@@ -342,7 +490,7 @@ function game(){
 				}
 				/*end of player hit wall , show modal of quit*/
 
-				/* get food, big food, multiplier, big score*/
+				/*player get food, big food, multiplier, big score*/
 				if(game.map[player.x - 0.5][player.y - 2] == 5){
 					game.map[player.x - 0.5][player.y - 2] = 0;
 					player.score = player.score + (10 * player.multiplier);
@@ -362,6 +510,8 @@ function game(){
 					game.map[player.x - 0.5][player.y - 2] = 0;
 					player.score = player.score + 100;
 				}
+				/*end of player get food, big food, multiplier, big score*/
+
 
 				/* check if the game will proceed to the next game or the game is already fnished*/
 				if(player.length > 4){
@@ -387,7 +537,7 @@ function game(){
 				player.show_player();
 				game.create_map();
 			}
-		}, 200);
+		}, 300);
 	}
 	this.proceed_next_stage = function(){
 		game.paused = false;
@@ -506,19 +656,60 @@ function game(){
 }
 
 function enemy(){
-	this.enemy_limit = 2;
+	this.enemy_limit = 1;
+	this.snake_data = []
 	this.snakes = function(){
-		var snakes = [];
 		for(var index = 0; index < this.enemy_limit; index++){
-			snakes[index] = {
+			this.snake_data.push({
 				enemy_id : index,
-				length : 1,
-				x : 0,
-				y : 0,
+				length : 3,
+				x : 20.5,
+				y : 11,
 				multiplier : 1,
-			};
+				direction : ((Math.floor((Math.random() * 10) + 1) > 5) ? "left" : "right")
+			})
 		}
+	}
+	this.display_enemy = function(){
+		var container = document.getElementById('enemy_data');
+		var firstChild = container.childNodes[0];
+		var snakes = this.snake_data;
+        for (var i = snakes.length - 1; i >= 0; i--) {
+        	var test = document.createElement('div')
+			test.setAttribute("id", "enemy_data_"+i);
+			container.appendChild(test, container);    
 
-		return snakes;
+			var haha = document.getElementById("enemy_data_"+i);
+
+			var newDiv = document.createElement('div');
+			newDiv.setAttribute("id", "enemy_head_"+i);
+			newDiv.setAttribute("enemy_head_id", i);
+			newDiv.setAttribute("class", "enemy");
+			haha.appendChild(newDiv, haha);   
+
+  	     	for (var k = snakes[i].length - 1; k >= 1; k--) {
+     			var newDiv = document.createElement('div');
+				newDiv.setAttribute("id", "enemy_tail_"+i+"_"+k);
+				newDiv.setAttribute("enemy_tail_id", k);
+				newDiv.setAttribute("class", "enemy_tail");
+				haha.appendChild(newDiv, haha);   
+			}
+		}
+	}
+	this.show_enemy = function(){
+		var snakes = this.snake_data;
+		for (var i = 0; i < snakes.length; i++) {
+			document.getElementById("enemy_head_"+i).style.left = snakes[i].x * 30+"px";
+			document.getElementById("enemy_head_"+i).style.top  = snakes[i].y * 30+"px";
+		}
+	};
+
+	this.movement = function(){
+		var snakes = this.snake_data;
+		
 	}
 }
+
+console.log(enemy.movement());
+console.log(enemy.snakes());
+console.log(enemy.display_enemy());

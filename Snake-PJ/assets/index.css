@@ -194,3 +194,16 @@
 	width: 30px;
 	height: 30px;	
 }
+
+#game_dashboard .enemy{
+	background-color: orange;
+	position: absolute;
+	height: 30px;
+	width: 30px;
+}
+#game_dashboard .enemy_tail{
+	background-color: pink;
+	position: absolute;
+	height: 30px;
+	width: 30px;
+}
