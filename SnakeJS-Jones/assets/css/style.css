@@ -110,3 +110,37 @@ header a{
 .hidden{
 	visibility: hidden;
 }
+.food{
+	background-color: white;
+	width: 9px;
+	height: 9px;
+	position: absolute;
+	border: 1px solid silver;
+	border-radius: 5px;
+}
+.freeze_ups, .shield_ups, .speed_ups, .reverse{
+	background-color: white;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 10px;
+	position: absolute;
+	width: 10px;
+}
+.freeze_ups{	
+	background-image: url('../images/freeze_ups.gif');	
+}
+.shield_ups{
+	background-image: url('../images/shield_ups.gif');
+}
+.speed_ups{
+	background-image: url('../images/speed_ups.gif');
+}
+.reverse{
+	background-image: url('../images/reverse.gif');
+}
+.snake{
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	border-radius: 5px;
+}
