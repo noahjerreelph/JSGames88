@@ -66,7 +66,7 @@ header a{
 #quit, #restart, #pause{
 	border: 1px solid black;
 	padding: 20px;
-	position: relative;
+	position: absolute;
 	text-align: center;
 	width: 300px;
     top: 200px;

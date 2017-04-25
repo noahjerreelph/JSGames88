@@ -1,96 +1,57 @@
 var val = "", players = [], html = '', game,new_player;
-	document.getElementById('play').addEventListener('click', function(){
-		val = this.value;
-	});
-	document.getElementById("submit_name").addEventListener("submit", function(evt){
-		evt.preventDefault();
-		if(val == "Play Game"){
-			new_player = (document.getElementById("player_name").value === "" ? "Unnamed" : document.getElementById("player_name").value);
-			document.getElementById("player_name").value = "";
-			game = new GameBoard(new_player);
-			document.getElementById('wrapper-login').setAttribute('class','hidden');
-			document.getElementById('wrapper-game').removeAttribute('class');
-			document.getElementsByTagName('header')[0].removeAttribute('class');
-			val = "";
-		}else{
-			document.getElementById('wrapper-login').setAttribute('class','hidden');
-			document.getElementById('highscore').removeAttribute('class');
+	function login_page(){
+		document.getElementById('play').addEventListener('click', function(){
+			val = this.value;
+		});
+		document.getElementById("submit_name").addEventListener("submit", function(evt){
+			evt.preventDefault();
+			if(val == "Play Game"){
+				new_player = (document.getElementById("player_name").value === "" ? "Unnamed" : document.getElementById("player_name").value);
+				document.getElementById("player_name").value = "";
+				game = new GameBoard(new_player);
+				document.getElementById('wrapper-login').setAttribute('class','hidden');
+				document.getElementsByTagName('header')[0].removeAttribute('class');
+				val = "";
+			}else{
+				document.getElementById('wrapper-login').setAttribute('class','hidden');
+				document.getElementById('highscore').removeAttribute('class');
+				html = '<thead>	\
+							<td>Name</td>	\
+							<td>Score</td>	\
+						</thead>';
+				if(players.length !== 0){
+					for(var i=0;i<players.length;i++){
+						html += '<tr>	\
+									<td>'+(players[i].name == "" ? "Unnamed" : players[i].name)+'</td>	\
+									<td>'+players[i].score+'</td>	\
+								</tr>';
+					}
+				}			
+				document.querySelector('#highscore table').innerHTML = html;
+			}
+		});
+		document.getElementById("clear_score").addEventListener('click', function(){
+			players = [];
 			html = '<thead>	\
 						<td>Name</td>	\
 						<td>Score</td>	\
 					</thead>';
-			if(players.length !== 0){
-				for(var i=0;i<players.length;i++){
-					html += '<tr>	\
-								<td>'+(players[i].name == "" ? "Unnamed" : players[i].name)+'</td>	\
-								<td>'+players[i].score+'</td>	\
-							</tr>';
-				}
-			}			
 			document.querySelector('#highscore table').innerHTML = html;
-		}
-	});
-	document.getElementById("clear_score").addEventListener('click', function(){
-		players = [];
-		html = '<thead>	\
-					<td>Name</td>	\
-					<td>Score</td>	\
-				</thead>';
-		document.querySelector('#highscore table').innerHTML = html;
-	});
-	document.getElementById("close").addEventListener('click', function(){
-		document.getElementById('highscore').setAttribute('class','hidden');
-		document.getElementById('wrapper-login').removeAttribute('class');
-	});
-	document.getElementById("btn-pause").addEventListener('click', function(){
-		var btn_val = this.innerText;
-		if(btn_val == 'Pause'){
-			this.innerText = 'Resume'
-			game.pause();				
-		}else{
-			this.innerText = 'Pause';
-			game.resume();				
-		}
-	});
-	document.getElementById("btn-restart").addEventListener('click', function(){
-		document.getElementById("btn-pause").disabled = true;
-		document.getElementById("btn-restart").disabled = true;
-		document.getElementById("btn-quit").disabled = true;
-		html = '<div id="restart"> \
-					<h3>Restart Game</h3>	\
-					<p>Are you sure you want to restart game?</p>	\
-					<div>	\
-						<a id="restart-yes" href="#">Yes</a>	\
-						<a id="restart-no" href="#" onclick="no_btn(restart)">No</a>	\
-					</div>	\
-				</div>';
-		document.getElementById('wrapper-game').innerHTML += html;
-		document.getElementById("restart-yes").addEventListener('click', function(){
-			game.restart();
 		});
-	});
-	document.getElementById("btn-quit").addEventListener('click', function(){
-		document.getElementById("btn-pause").disabled = true;
-		document.getElementById("btn-restart").disabled = true;
-		document.getElementById("btn-quit").disabled = true;
-		html = '<div id="quit"> \
-					<h3>Quit Game</h3>	\
-					<p>Are you sure you want to quit game?</p>	\
-					<div>	\
-						<a id="quit-yes" href="#">Yes</a>	\
-						<a id="quit-no" href="#" onclick="no_btn(quit)">No</a>	\
-					</div>	\
-				</div>';
-		document.getElementById('wrapper-game').innerHTML += html;
-		document.getElementById("quit-yes").addEventListener('click', function(){
-			game.quit();
+		document.getElementById("close").addEventListener('click', function(){
+			document.getElementById('highscore').setAttribute('class','hidden');
+			document.getElementById('wrapper-login').removeAttribute('class');
 		});
-	});
-	function no_btn(btn){
-		document.getElementById('wrapper-game').removeChild(btn);	
+	}
+	login_page();
+	function no_btn(btn = null){
+		if(btn !== null)
+			document.getElementById('wrapper-game').removeChild(btn);
+
 		document.getElementById("btn-pause").disabled = false;
 		document.getElementById("btn-restart").disabled = false;
 		document.getElementById("btn-quit").disabled = false;
+		game.interval = setInterval(game.loop,game.settings.movement_speed);
 	}
 	function random_color(){
 		var rgb = ['a','b','c','d','e','f','0','1','2','3','4','5','6','7','8','9'];
@@ -111,8 +72,8 @@ var val = "", players = [], html = '', game,new_player;
 						enemy_killed: 0,
 						shield_ups: false,
 						speed_ups: 0,
-						body: [0,1,2,3,4]
-						// body: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
+						body: [0,1,2,3,4],
+						type: 'player'
 			};
 		this.direction = 'left';	// direction where the snake will go
 		this.val = 10;	
@@ -162,7 +123,7 @@ var val = "", players = [], html = '', game,new_player;
 						get = document.getElementById(id);
 					document.getElementById('wrapper-game').removeChild(get);
 					game.settings.snake_food --;
-					this.addBody();		//calls the function to increase snkaes length
+					this.addBody();		//calls the function to increase snakes length
 					this.info.score += 10;
 					document.querySelector('#score_board table').remove();
 					game.updateScore();
@@ -197,7 +158,6 @@ var val = "", players = [], html = '', game,new_player;
 			    break;
 			    case "shield_ups":
 			    	this.info.shield_ups = true;
-			    	console.log(this.info.shield_ups)
 			    break;
 		        case "reverse":
 		        	game.reverse();
@@ -226,6 +186,7 @@ var val = "", players = [], html = '', game,new_player;
 						this.temp = {x: parseInt(this.info.body[i].style.left),
 									y: parseInt(this.info.body[i].style.top)};
 						this.info.body[i].style.left = this.temp.x+this.val+'px';
+
 						head = {x: this.temp.x+this.val, y: this.temp.y};
 					}else{
 						temp = {x: parseInt(this.info.body[i].style.left),
@@ -253,7 +214,7 @@ var val = "", players = [], html = '', game,new_player;
 			}
 			this.eatFood(head);
 			this.get_ups(head);
-			game.collisions(head,this.info,'player');
+			game.collisions(head,this.info);
 		}
 		this.initialize();
 	}
@@ -261,6 +222,7 @@ var val = "", players = [], html = '', game,new_player;
 	function GameBoard(player){
 		var snakes = [];
 		this.player = player;
+		this.temp = snakes;
 		this.settings = {
 							snake_food: 0,
 							enemy_count: 20,
@@ -270,20 +232,75 @@ var val = "", players = [], html = '', game,new_player;
 							ups_count: 0,
 							freeze_ups: false,
 						}
+		this.generate_map = function(){
+			document.body.innerHTML +='<div id="wrapper-game">	\
+											<div id="score_board"></div>	\
+										</div>';
+
+			document.getElementById("btn-pause").addEventListener('click', function(){
+				var btn_val = this.innerText;
+				if(btn_val == 'Pause'){
+					this.innerText = 'Resume'
+					game.pause();				
+				}else{
+					this.innerText = 'Pause';
+					game.resume();				
+				}
+			});
+			document.getElementById("btn-restart").addEventListener('click', function(){
+				clearInterval(game.interval);
+				document.getElementById("btn-pause").disabled = true;
+				document.getElementById("btn-restart").disabled = true;
+				document.getElementById("btn-quit").disabled = true;
+				html = makeObj('div',{id:'restart'})
+				html_restart =	'<h3>Restart Game</h3>	\
+								<p>Are you sure you want to restart game?</p>	\
+								<div>	\
+									<a id="restart-yes" href="#">Yes</a>	\
+									<a id="restart-no" href="#" onclick="no_btn(restart)">No</a>	\
+								</div>';
+				html.innerHTML = html_restart;
+				document.getElementById('wrapper-game').appendChild(html);
+				document.getElementById("restart-yes").addEventListener('click', function(){
+					game.restart();
+				});
+			});
+			document.getElementById("btn-quit").addEventListener('click', function(){
+				clearInterval(game.interval);
+				document.getElementById("btn-pause").disabled = true;
+				document.getElementById("btn-restart").disabled = true;
+				document.getElementById("btn-quit").disabled = true;
+				html = makeObj('div',{id: 'quit'});					
+				html_quit =	'<h3>Quit Game</h3>	\
+							<p>Are you sure you want to quit game?</p>	\
+							<div>	\
+								<a id="quit-yes" href="#">Yes</a>	\
+								<a id="quit-no" href="#" onclick="no_btn(quit)">No</a>	\
+							</div>';
+				html.innerHTML = html_quit;
+				document.getElementById('wrapper-game').appendChild(html);
+				document.getElementById("quit-yes").addEventListener('click', function(){
+					game.quit();
+				});
+			});
+		}
+		this.generate_map();
 		this.quit = function(){
-			no_btn(quit);
+			var elem = document.getElementById("wrapper-game");
+				elem.remove();
+			this.removeSnake();
 			document.getElementById('wrapper-login').removeAttribute('class');
-			document.getElementById('wrapper-game').setAttribute('class','hidden');
 			document.getElementsByTagName('header')[0].setAttribute('class','hidden');
+			login_page();
 		}
 		this.pause = function(){
-			clearInterval(this.interval);
+			clearInterval(this.interval)
 			document.getElementById("btn-restart").disabled = true;
 			document.getElementById("btn-quit").disabled = true;
-			html = '<div id="pause"> \
-						<h1>Game Paused</h1>	\
-					</div>';
-			document.getElementById('wrapper-game').innerHTML += html;
+			html = makeObj('div',{id: 'pause'});
+			h1 = "<h1>Game Paused</h1>";
+			html.innerHTML = h1;
+			document.getElementById('wrapper-game').appendChild(html) ;
 		}
 		this.resume = function(){
 			this.interval = setInterval(this.loop,this.settings.movement_speed);
@@ -293,8 +310,24 @@ var val = "", players = [], html = '', game,new_player;
 			document.getElementById("btn-quit").disabled = false;
 		}
 		this.restart = function(){
-			game = new GameBoard(new_player);	
-		}				
+			clearInterval(this.interval)
+			var elem = document.getElementById("wrapper-game");
+				elem.remove();
+			this.removeSnake();
+			game = new GameBoard(new_player)
+		}
+		this.removeSnake = function(){
+			// this will remove Snake
+			clearInterval(this.interval)
+			var snake_keys = Object.keys(snakes);
+			for(var i=0; i < snake_keys.length; i++){
+				for(var j=0; j<snakes[snake_keys[i]].info.body.length; j++){
+					snakes[snake_keys[i]].info.body[j].remove();
+				}
+			}
+			snakes = [];
+			no_btn();
+		}			
 		this.keyControl = function(directions){
 			var val = snakes[this.player].val;
 			switch(directions) {
@@ -323,7 +356,7 @@ var val = "", players = [], html = '', game,new_player;
 				}
 			}
 		}
-		this.collisions = function(head,snake,type = null){
+		this.collisions = function(head,snake){
 			var wall = document.getElementById('wrapper-game'),
 				collision = false;
 			var snake_keys = Object.keys(snakes);
@@ -355,22 +388,17 @@ var val = "", players = [], html = '', game,new_player;
 							var body_x = parseInt(snakes[snake_keys[i]].info.body[j].style.left),
 								body_y = parseInt(snakes[snake_keys[i]].info.body[j].style.top);
 							if(head.x == body_x && head.y == body_y){
+								snakes[snake_keys[i]].info.enemy_killed ++;
 								game.changeToFood(snake.body);
 								collision = true
 							}
 						}
-						if(collision == true){
-							snakes[snake_keys[i]].info.enemy_killed ++;
-						}
 					}
 				}
 			}
-			// if collision is true it will remove the snake from game snakes
+			// if collision is true it will remove the snake from game snakes array
 			if(collision == true){
 				for(var i=0; i < snake_keys.length; i++){
-						if(type == 'player'){
-							players.push({name: snakes[snake_keys[i]].info.id,score: snakes[snake_keys[i]].info.score})
-						}
 					if(snakes[snake_keys[i]].info.id != snake.id){
 						if(isNaN(snake_keys[i])  == true){
 							temp_snakes[snake_keys[i]] = snakes[snake_keys[i]];
@@ -380,6 +408,17 @@ var val = "", players = [], html = '', game,new_player;
 					}
 				}
 				snakes = temp_snakes;
+			}
+			// update high score and respawn enemy or players
+			if(collision == true && snake.type == 'player'){
+				players.push({name: snake.id, score: snake.score})
+				players.sort(function (a, b) {		
+				  return b.score - a.score;
+				});
+				players.splice(10, 1);
+				this.createrPlayerSnake(rand_x(),rand_y(),this.player)
+			}else if(collision == true){
+				this.createrEnemySnake(snake.id)
 			}
 		}
 		this.updateScore = function(){
@@ -404,10 +443,9 @@ var val = "", players = [], html = '', game,new_player;
 		         	tr.appendChild(td_score);
 		         	table.appendChild(tr);
 			}
-				document.getElementById('score_board').appendChild(table);
+			document.getElementById('score_board').appendChild(table);
 		}
 		this.randFood = function(){
-			for(var count = this.settings.snake_food; count < (snakes.length*2);count++){
 				var food = makeObj('div',{
 											class: 'food',
 											style: "top: "+rand_y()+"px;	\
@@ -415,7 +453,6 @@ var val = "", players = [], html = '', game,new_player;
 										});
 				document.getElementById('wrapper-game').appendChild(food);
 				this.settings.snake_food ++;
-			}
 		}
 		this.changeToFood = function(snake){
 			var info = '', food = '';
@@ -432,11 +469,18 @@ var val = "", players = [], html = '', game,new_player;
 				document.getElementById('wrapper-game').appendChild(food);
 			}
 		}		
-		this.createrEnemySnake = function(count){
-			for(var i=0;i<count;i++){
-				var x = rand_x(), y = rand_y();
-				var new_enemy_snake = new EnemySnake(x,y,i)
-				snakes[i] = new_enemy_snake;
+		this.createrEnemySnake = function(id = null){
+			var x = rand_x(), y = rand_y(),
+				new_enemy_snake;
+			if(id == null){
+				for(var i=0;i<this.settings.enemy_count;i++){
+					new_enemy_snake = new EnemySnake(x,y,(i));
+						snakes[i] = new_enemy_snake;
+				}				
+			}else{
+				var id = id.split('_').pop();	
+				new_enemy_snake = new EnemySnake(x,y,id);
+				snakes[id] = new_enemy_snake;
 			}
 		}
 		this.createrPlayerSnake = function(x,y,name){
@@ -445,8 +489,7 @@ var val = "", players = [], html = '', game,new_player;
 		}
 		this.showUps = function(ups_count){
 			if(ups_count < 5){
-				var ups_arr = ['speed_ups','freeze_ups','reverse','shield_ups'],		
-				// var ups_arr = ['freeze_ups'],		
+				var ups_arr = ['speed_ups','freeze_ups','reverse','shield_ups'],
 					selected = ups_arr[Math.floor(Math.random()*4)];
 				var ups = makeObj('div',{
 										class: selected+' ups',
@@ -495,21 +538,22 @@ var val = "", players = [], html = '', game,new_player;
 			return (Math.floor(Math.random()*10)* 110)+200;
 		}
 		var rand_y = function(){
-			return (Math.floor(Math.random()*5)* 10)*15;
+			var val = ((Math.floor(Math.random()*5)* 10)*15)+ 20;
+			return (val <= 0 ? val+30 : (val >= 600 ? val-30 : val)) 
 		}
-		var makeObj = function(tag,attrs){
+		var makeObj = function(tag,attrs = null){
 			var el = document.createElement(tag)			
 			for(var attr in attrs){
 				el.setAttribute(attr, attrs[attr])
 			}
 			return el;
 		}
-		this.interval = setInterval(this.loop,this.settings.movement_speed);
-		this.createrEnemySnake(this.settings.enemy_count);
-		this.createrPlayerSnake(70,10,this.player);
 		this.randFood();
 		this.updateScore();
 		this.showUps(this.settings.ups_count);
+		this.createrEnemySnake();
+		this.createrPlayerSnake(70,10,this.player);
+		this.interval = setInterval(this.loop,this.settings.movement_speed);
 	}
 
 	function EnemySnake(x,y,id){
@@ -521,7 +565,8 @@ var val = "", players = [], html = '', game,new_player;
 						enemy_killed: 0,
 						shield_ups: 0,
 						speed_ups: 0,
-						body: [0,1,2,3,4]
+						body: [0,1,2,3,4],
+						type: 'enemy'
 			};
 		this.direction = 'left';
 		this.last_direction = 'left';
@@ -572,7 +617,7 @@ var val = "", players = [], html = '', game,new_player;
 						get = document.getElementById(id);
 					document.getElementById('wrapper-game').removeChild(get);
 					game.settings.snake_food --;
-					this.addBody();		//calls the function to increase snkaes length
+					this.addBody();		//calls the function to increase snakes length
 					this.info.score += 10;
 					game.randFood();
 					document.querySelector('#score_board table').remove();
