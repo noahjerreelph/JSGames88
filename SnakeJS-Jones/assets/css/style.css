@@ -35,7 +35,7 @@
 	height: 300px;
 }		
 #highscore a, #quit a, #restart a{
-	text-decoration: none;
+	text-decoration: none;	
 	color: black;
 	padding: 2px 15px;
 	border: 1px solid #A6A6A6;
@@ -88,7 +88,7 @@ header a{
 	display: inline-block;
 	height: 500px;
 	margin: 10px;
-	opacity: .5;
+	opacity: .3;
 	position: absolute;
 	top: 0px;
 	vertical-align: top;
@@ -102,7 +102,7 @@ header a{
 #wrapper-game{
 	width: 99.35%;
 	height: 610px;
-	border: 5px solid black;
+	border: 1px solid black;
 	position: absolute;
     top: 45px;
     background-color: black;

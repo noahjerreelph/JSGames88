@@ -68,7 +68,7 @@ var val = "", players = [], html = '', game,new_player;
 						y: y,
 						id: id,
 						color: random_color(),
-						score: 10,
+						score: 0,
 						enemy_killed: 0,
 						shield_ups: false,
 						speed_ups: 0,
@@ -122,7 +122,6 @@ var val = "", players = [], html = '', game,new_player;
 					var id = food[i].id = 'id',
 						get = document.getElementById(id);
 					document.getElementById('wrapper-game').removeChild(get);
-					game.settings.snake_food --;
 					this.addBody();		//calls the function to increase snakes length
 					this.info.score += 10;
 					document.querySelector('#score_board table').remove();
@@ -157,7 +156,7 @@ var val = "", players = [], html = '', game,new_player;
 						this.val += 10;
 			    break;
 			    case "shield_ups":
-			    	this.info.shield_ups = true;
+			    	game.activateShield(this.info);
 			    break;
 		        case "reverse":
 		        	game.reverse();
@@ -224,13 +223,13 @@ var val = "", players = [], html = '', game,new_player;
 		this.player = player;
 		this.temp = snakes;
 		this.settings = {
-							snake_food: 0,
-							enemy_count: 20,
-							enemy_to_kill: 10,
-							movement_speed: 50,
+							enemy_count: 5,
+							enemy_to_kill: 5,
+							movement_speed: 100,
 							stage: 1,
 							ups_count: 0,
 							freeze_ups: false,
+							reverse: false,
 						}
 		this.generate_map = function(){
 			document.body.innerHTML +='<div id="wrapper-game">	\
@@ -356,11 +355,22 @@ var val = "", players = [], html = '', game,new_player;
 				}
 			}
 		}
+		this.nextStage = function(){
+			if(this.settings.stage < 5){
+				this.settings.stage += 1;
+				this.settings.enemy_count += 3;
+				this.settings.enemy_to_kill += 3;
+				this.settings.movement_speed -= 10;	
+				document.querySelector('header span').innerText = 'Stage '+this.settings.stage;			
+				this.createrEnemySnake();
+			}
+		}
 		this.collisions = function(head,snake){
 			var wall = document.getElementById('wrapper-game'),
 				collision = false;
 			var snake_keys = Object.keys(snakes);
 			var temp_snakes = [];
+			console.log(snake.shield_ups)
 			// if snake hit the wall
 			if(collision == false){
 				if(head.x > (wall.clientWidth - 10) || head.x < 0){
@@ -373,10 +383,12 @@ var val = "", players = [], html = '', game,new_player;
 			}
 			// // if snake hit its self
 			// if(collision == false){
-			// 	for(var i in snake.body){
-			// 		if(snake.body[i].x == head.x && snake.body[i].y == head.y){
-			// 			game.changeToFood(snake.body);
-			// 			collision = true;
+			// 	for(var i=1;i<snake.body.length;i++){
+			// 	var x = parseInt(snake.body[i].style.left), y = parseInt(snake.body[i].style.top);
+			// 		if(x == head.x && y == head.y && this.settings.reverse == false){
+			// 			console.log(snake.body[i],{x,y},head)
+			// 		// 	game.changeToFood(snake.body);
+			// 		// 	collision = true;
 			// 		}
 			// 	}
 			// }
@@ -387,29 +399,20 @@ var val = "", players = [], html = '', game,new_player;
 						for(var j=0; j<snakes[snake_keys[i]].info.body.length; j++){
 							var body_x = parseInt(snakes[snake_keys[i]].info.body[j].style.left),
 								body_y = parseInt(snakes[snake_keys[i]].info.body[j].style.top);
-							if(head.x == body_x && head.y == body_y){
+							if(head.x == body_x && head.y == body_y && snake.shield_ups == false){
 								snakes[snake_keys[i]].info.enemy_killed ++;
+								snakes[snake_keys[i]].info.score += 500;
 								game.changeToFood(snake.body);
 								collision = true
+							}
+							if(snakes[snake_keys[i]].info.enemy_killed == this.settings.enemy_to_kill && snakes[snake_keys[i]].info.type == 'player'){
+								this.nextStage();
 							}
 						}
 					}
 				}
 			}
-			// if collision is true it will remove the snake from game snakes array
-			if(collision == true){
-				for(var i=0; i < snake_keys.length; i++){
-					if(snakes[snake_keys[i]].info.id != snake.id){
-						if(isNaN(snake_keys[i])  == true){
-							temp_snakes[snake_keys[i]] = snakes[snake_keys[i]];
-						}else{
-							temp_snakes.push(snakes[snake_keys[i]])
-						}
-					}
-				}
-				snakes = temp_snakes;
-			}
-			// update high score and respawn enemy or players
+			// // update high score and respawn enemy or players
 			if(collision == true && snake.type == 'player'){
 				players.push({name: snake.id, score: snake.score})
 				players.sort(function (a, b) {		
@@ -446,13 +449,15 @@ var val = "", players = [], html = '', game,new_player;
 			document.getElementById('score_board').appendChild(table);
 		}
 		this.randFood = function(){
+			var el = document.getElementsByClassName('food');
+			if(el.length < 30){
 				var food = makeObj('div',{
 											class: 'food',
 											style: "top: "+rand_y()+"px;	\
 											left: "+rand_x()+"px;"
 										});
 				document.getElementById('wrapper-game').appendChild(food);
-				this.settings.snake_food ++;
+			}
 		}
 		this.changeToFood = function(snake){
 			var info = '', food = '';
@@ -470,17 +475,22 @@ var val = "", players = [], html = '', game,new_player;
 			}
 		}		
 		this.createrEnemySnake = function(id = null){
-			var x = rand_x(), y = rand_y(),
-				new_enemy_snake;
-			if(id == null){
+			var	new_enemy_snake;
+			if(id == null && this.settings.stage == 1){
 				for(var i=0;i<this.settings.enemy_count;i++){
-					new_enemy_snake = new EnemySnake(x,y,(i));
+						new_enemy_snake = new EnemySnake(rand_x(),rand_y(),i);
 						snakes[i] = new_enemy_snake;
-				}				
-			}else{
+				}			
+			}else if(id !== null){
 				var id = id.split('_').pop();	
-				new_enemy_snake = new EnemySnake(x,y,id);
+				new_enemy_snake = new EnemySnake(rand_x(),rand_y(),id);
 				snakes[id] = new_enemy_snake;
+			}
+			else{
+				for(var i=snakes.length;i<this.settings.enemy_count;i++){
+					new_enemy_snake = new EnemySnake(rand_x(),rand_y(),i);
+					snakes[i] = new_enemy_snake;
+				}
 			}
 		}
 		this.createrPlayerSnake = function(x,y,name){
@@ -529,10 +539,20 @@ var val = "", players = [], html = '', game,new_player;
 		this.reverse = function(){
 			var keys = Object.keys(snakes);
 			for(var i=0;i<keys.length;i++){
-				var rev = snakes[keys[i]].info.body;				
-				rev.reverse();
+				snakes[keys[i]].info.body.reverse();
 				(snakes[keys[i]].val > 0 ? snakes[keys[i]].val = -10 : snakes[keys[i]].val = 10)
+				this.settings.reverse = true;
+				setTimeout(function(){
+					game.settings.reverse = false;
+				},300)		
 			}
+		}
+		this.activateShield = function(snake){
+			snake.shield_ups = true;
+			console.log(snake.shield_ups)
+			setTimeout(function(){
+				snake.shield_ups = false;
+			},5000)
 		}
 		var rand_x = function(){
 			return (Math.floor(Math.random()*10)* 110)+200;
@@ -568,7 +588,6 @@ var val = "", players = [], html = '', game,new_player;
 						body: [0,1,2,3,4],
 						type: 'enemy'
 			};
-		this.direction = 'left';
 		this.last_direction = 'left';
 		this.temp = {};
 		this.val = 10;
@@ -616,7 +635,6 @@ var val = "", players = [], html = '', game,new_player;
 					var id = food[i].id = 'id',
 						get = document.getElementById(id);
 					document.getElementById('wrapper-game').removeChild(get);
-					game.settings.snake_food --;
 					this.addBody();		//calls the function to increase snakes length
 					this.info.score += 10;
 					game.randFood();
@@ -664,6 +682,7 @@ var val = "", players = [], html = '', game,new_player;
 						this.val += 10;
 			    break;
 			    case "shield_ups":
+			    	game.activateShield(this.info);
 			    break;
 		        case "reverse":
 		        	game.reverse();
@@ -671,7 +690,7 @@ var val = "", players = [], html = '', game,new_player;
 			}
 		}
 		this.moveSnake = function(){
-			var rand = ['left','right','up','down','down','up','down','up'],
+			var rand = ['left','right','up','down'],
 				move = rand[Math.floor(Math.random()*rand.length)];
 			var head = {},body = [];
 
@@ -692,7 +711,6 @@ var val = "", players = [], html = '', game,new_player;
 						(this.last_direction == 'left' ? this.val = -10 : this.val = 10)
 						this.info.body[i].style.left = this.temp.x+this.val+'px'
 					}
-					this.last_direction = move;
 				}else{
 					temp = {x: parseInt(this.info.body[i].style.left),
 							y: parseInt(this.info.body[i].style.top)};
@@ -705,6 +723,7 @@ var val = "", players = [], html = '', game,new_player;
 				this.eatFood(head)
 				this.get_ups(head)
 				game.collisions(head,this.info);
+				this.last_direction = move;
 		}
 		this.initialize();
 	}
