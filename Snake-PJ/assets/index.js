@@ -1,43 +1,58 @@
-var player = new player();
+var player = new Player(false);
 var game = new game();
-var enemy = new enemy();
 var food = new food();
 
+function start_new_game(){
+	player.player_body();
+	player.x = 3.5;
+	player.y = 3;
+	player.length = 3;
+	player.direction = "right";
 
+	game.stage = 1;
+	player.score = 0;
+	for (var i = 0; i < game.map.length; i++) {
+		for (var k = 0; k < game.map[i].length; k++) {
+           	if (game.map[i][k] != 1) game.map[i][k] = 0;
+		}
+	}
+
+	player.next_game()
+
+	game.paused = false;
+
+	if(player.is_new_game == false){
+		for (var i = document.getElementsByClassName("player").length; i--; ) {
+			document.getElementsByClassName("player")[i].remove();
+		}
+		
+		game.enemies = [];
+
+		this.start_game = function(){
+			var game = this;
+			for(var x = 0; x < 1; x++){
+				game.enemies.push(new Player(true, x));	
+			}
+		}
+
+		food.food()
+		game.start_game()
+		game.create_map()
+	}
+}
 
 /* Login Prototype Feature*/
 	/* Start Game Feature */
 		document.getElementById("start_game").onclick = function(){
 			player.user_name = document.getElementById("user_name").value;
 			if(player.user_name != ""){
-				player.player_body();
-				player.x = 3.5;
-				player.y = 3;
-				player.length = 3;
-				player.direction = "right";
-				game.stage = 1;
-				player.score = 0;
-				for (var i = 0; i < game.map.length; i++) {
-					for (var k = 0; k < game.map[i].length; k++) {
-			           	if (game.map[i][k] == 5) game.map[i][k] = 0;
-			           	else if (game.map[i][k] == 99) game.map[i][k] = 0;
-			           	else if (game.map[i][k] == 98) game.map[i][k] = 0;
-			           	else if (game.map[i][k] == 97) game.map[i][k] = 0;
-					}
-				}
-
-				game.paused = false;
-				game.create_map()
-				food.food()
-
-				if(player.is_new_game == false){
-					game.start_game()
-					player.display_player();
-				}
+				start_new_game();
 
 				document.getElementById("login_dashboard").style.display = "none";
 				document.getElementById("user_highscore").style.display = "none";
 				document.getElementById("game_dashboard").style.display = "";
+				document.getElementById("game_container_header").style.display = "";
+				document.getElementById("game_score_container").style.display = "";
 			}
 
 			return false;
@@ -108,6 +123,7 @@ var food = new food();
 			document.getElementById("player_restart").style.display = "";
 		}
 		document.getElementById("player_restart_yes").onclick = function(){
+			game.proceed_next_stage(true);
 			document.getElementById("pause_game").style.color = "black";
 			document.getElementById("quit_game").style.color = "black";
 			document.getElementById("player_restart").style.display = "none";
@@ -132,50 +148,37 @@ var food = new food();
 			document.getElementById("player_quit").style.display = "none";
 			document.getElementById("game_dashboard").style.display = "none";
 			document.getElementById("login_dashboard").style.display = "";
+			document.getElementById("game_score_container").style.display = "none";
+			document.getElementById("game_container_header").style.display = "none";
 			player.is_new_game = true;
 			game.users.push({"user_name" : player.user_name, "score" : player.score});
 		}
 		document.getElementById("congrats_quit").onclick = function(){
 			document.getElementById("congrats").style.display = "none";
+			document.getElementById("game_container_header").style.display = "none";
 			document.getElementById("game_dashboard").style.display = "none";
+			document.getElementById("game_score_container").style.display = "none";
 			document.getElementById("login_dashboard").style.display = "";
 			player.is_new_game = true;
 			game.users.push({"user_name" : player.user_name, "score" : player.score});
-		}
-	
-
+		}	
 		document.getElementById("player_proceed_no").onclick = function(){
 			document.getElementById("proceed_next_stage").style.display = "none";
 			document.getElementById("game_dashboard").style.display = "none";
+			document.getElementById("game_container_header").style.display = "none";
+			document.getElementById("game_score_container").style.display = "none";
 			document.getElementById("login_dashboard").style.display = "";
 			player.is_new_game = true;
 			game.users.push({"user_name" : player.user_name, "score" : player.score});
+			player.remove_player();
 		}
-
 		document.getElementById("player_quit_no").onclick = function(){
 			game.paused = false;
 			document.getElementById("pause_game").style.color = "black";
 			document.getElementById("restart_game").style.color = "black";
 			document.getElementById("player_quit").style.display = "none";
-
-			player.x = 3.5;
-			player.y = 3;
-			player.length = 3;
-			player.direction = "right";
-			game.stage = game.stage;
-			player.score = 0;
-			for (var i = 0; i < game.map.length; i++) {
-				for (var k = 0; k < game.map[i].length; k++) {
-		           	if (game.map[i][k] != 1) game.map[i][k] = 0;
-		           	// else if (game.map[i][k] == 99) game.map[i][k] = 0;
-		           	// else if (game.map[i][k] == 98) game.map[i][k] = 0;
-		           	// else if (game.map[i][k] == 97) game.map[i][k] = 0;
-				}
-			}
-
-			game.create_map()
-			player.show_player()
 		}
+
 		document.getElementById("player_proceed_yes").onclick = function(){
 			document.getElementById("game_stage").innerHTML = "Stage"+(parseInt(game.stage) + parseInt(1));
 			game.proceed_next_stage();
@@ -183,130 +186,192 @@ var food = new food();
 	/* End of Game Header Feature*/
 
 	document.onkeydown = function(e){
-		// if(is_paused === false && is_game_start == true)
 			player.movement(e);
 	}
 /* End of Prototype Feature */
 /* player function */
-	function player(){
+	function Player(is_enemy = false, index = null){
+		var snake_parts = [{ x: 3.5, y: 3, last_loc: undefined}];
+		this.is_enemy = is_enemy;
 		this.user_name;
 		this.score = 0;
 		this.length = 3;
 		this.multiplier = 1;
-		this.x = 3.5;
-		this.y = 3;
-		this.old_x;
-		this.old_y;
+		this.x = is_enemy == false ? 3.5 	: (Math.floor((Math.random() * 55) + 3) +".5");
+		this.y = is_enemy == false ? 3 		: (Math.floor((Math.random() * 20) + 3));
+		this.head = is_enemy == false ? "player_head_0" 	: ("enemy_head_" + index);
+		this.enemy_index = index;
 		this.is_new_game = false;
 		this.direction = "right";
-		this.player_body = function(x = null,y = null, index = null){
-			var test = [];
-			for (var i = 0; i < player.length; i++) {
-				test[((index == null) ? i : index) ] = {
-					x : ((x == null) ? 0 : x) ,
-					y : ((y == null) ? 0 : y) 
+		this.enemy_direction = "right";
+
+
+		/* Initialize the first body of snake */
+		var _init_snake = function(player){
+			for (var i = 1; i < 3; i++) {
+				snake_parts.push({
+					x: snake_parts[i-1].x - 1,
+					y: snake_parts[i-1].y
+				});
+			}
+
+			var container_id = (player.is_enemy == false) ? 'player_data' : 'enemy_'+player.enemy_index;
+
+			if(document.getElementById(container_id) == undefined)
+				document.getElementById("game_dashboard").innerHTML += "<div id='" + container_id + "'></div>";
+		}
+		/* end of Initialize the first body of snake */
+
+		/* player turning points*/
+		this.player_body = function(x = null, y = null, index = null){
+			if(index !== null){
+				snake_parts[index].last_loc = {
+					x: snake_parts[index].x,
+					y: snake_parts[index].y
+				}
+
+				snake_parts[index].x = x;
+				snake_parts[index].y = y;
+
+				for(var x = index + 1; x < snake_parts.length; x++){
+					snake_parts[x].last_loc = {
+						x: snake_parts[x].x,
+						y: snake_parts[x].y
+					};
+
+					snake_parts[x].x = snake_parts[x-1].last_loc.x;
+					snake_parts[x].y = snake_parts[x-1].last_loc.y;
 				}
 			}
 
-			return test;
+			return snake_parts;
 		}
 
-		/* display player in front end*/
-		this.display_player = function(){
-			// var container = document.getElementById('player_data');
-			// var firstChild = container.childNodes[0];
+		/* end of player turning points*/
 
-	  //       for (var i = this.length - 1; i >= 0; i--) {
-			// 	if (container && firstChild && i != 0) {
-			// 		var newDiv = document.createElement('div');
-			// 		newDiv.setAttribute("id", "player_tail_"+i);
-			// 		newDiv.setAttribute("player_tail_id",i);
-			// 		newDiv.setAttribute("class", "player");
-			// 		container.appendChild(newDiv, container);    
-			// 	}
-			// 	else{
-			// 		var newDiv = document.createElement('div');
-			// 		newDiv.setAttribute("id", "player_head_"+i);
-			// 		newDiv.setAttribute("player_head_id", i);
-			// 		newDiv.setAttribute("class", "player");
-			// 		container.appendChild(newDiv, container);    
-			// 	}
-			// }
+		/* collisions */
+		this.collided = function (snakes){
+			var player_body_init = player.player_body();
+			/* enemy collide to player*/
+			/* Count how many snakes in the game */
+			for (var i = 0; i < snakes.length; i++) {
+				var enemy_head = snakes[i].player_body();
+
+				/* Count the body of the user snake */
+				for (var k = 0; k < player_body_init.length; k++) {
+					/* Check if the enemy collide to the user snake */
+					if(this.is_enemy == true && player_body_init[k].x == enemy_head[0].x && player_body_init[k].y == enemy_head[0].y)
+						snakes[i].remove_player();
+				}
+
+				/* collide same enemy */
+				for (var index = 0; index < enemy_head.length; index++) {
+					/* enemy to user */
+					if (player_body_init[0].x == enemy_head[index].x &&  player_body_init[0].y == enemy_head[index].y){
+						player.remove_player();
+					}
+					/* end of enemy to user */
+					/* Enemy to enemy */
+					if(this.is_enemy == true){
+						for (var index = 0; index < enemy_head.length; index++) {
+							if(this.enemy_index != snakes[i].enemy_index){
+								if(this.x == enemy_head[index].x && this.y == enemy_head[index].y)
+									snakes[i].remove_player(i);
+							}
+						}
+					}	
+					/* End of Enemy to enemy */
+				}
+			}
 		}
+		/* end of collisions */
 
-		/* end of display player in front end*/
-
-		/* show where location of player */
+		/* show where location of player/enemy */
 		this.show_player = function(){
-			player_body_temp = player.player_body();
-			var last_loc = { x:player.player_body(x,null,0)[0].x, y: player.player_body(null,y,0)[0].y };
-			var container = document.getElementById('player_data');
-			var firstChild = container.childNodes[0];
-
-			console.log(last_loc.x);
-
-			for (var i = 0; i < player.length; i++) {
+			var container = (this.is_enemy == false) ?  document.getElementById('player_data') : document.getElementById('enemy_'+this.enemy_index);
+			/* Create the html structure in the front end */
+			for (var i = 0; i < snake_parts.length; i++) {
 				if(i == 0){
-					var newDiv = document.createElement('div');
-					newDiv.setAttribute("id", "player_head_"+i);
-					newDiv.setAttribute("player_head_id", i);
-					newDiv.setAttribute("class", "player");
-					container.appendChild(newDiv, container);  
+					var snakeDom 		 = document.getElementById(this.head);
+					var snake_head_class = this.is_enemy == false ? "player" : "enemy";
+					if(snakeDom == undefined){
+						var newDiv = document.createElement('div');
+						newDiv.setAttribute("id", this.head);
+						newDiv.setAttribute("player_head_id", i);
+						newDiv.setAttribute("class", snake_head_class);
+						container.appendChild(newDiv, container);  
+					}
 				}
 				else{	
-					var temp_loc = player_body_temp[i];
-					// console.log(temp_loc)
-
-					player_body_temp[i] = {
-						x : last_loc.x,
-						y : last_loc.y
+					var tail_id 	 	 = this.is_enemy == false ? "player_tail_"+i : "enemy_tail_"+ this.enemy_index + "_" + i;
+					var snake_tail_class = this.is_enemy == false ? "player" : "enemy_tail";
+					var snakeDom = document.getElementById(tail_id);
+					if(snakeDom == undefined){
+						var newDiv = document.createElement('div');
+						newDiv.setAttribute("id", tail_id);
+						newDiv.setAttribute("player_tail_id",i);
+						newDiv.setAttribute("class", snake_tail_class);
+						container.appendChild(newDiv, container);   
 					}
-
-					last_loc = temp_loc;
-
-					var newDiv = document.createElement('div');
-					newDiv.setAttribute("id", "player_tail_"+i);
-					newDiv.setAttribute("player_tail_id",i);
-					newDiv.setAttribute("class", "player");
-					container.appendChild(newDiv, container);   
 				}
 			}
-			
-			document.getElementById("player_head_0").style.left = this.x * 30+"px";
-			document.getElementById("player_head_0").style.top  = this.y * 30+"px";
+			/*End of Create the html structure in the front end */
 
-			for (var i = 1; i < player_body_temp.length; i++) {
-				console.log(player_body_temp)
-				if( player_body_temp[i]){
-					document.getElementById("player_tail_" + i).style.left = player_body_temp[i].x * 30+"px";
-					document.getElementById("player_tail_" + i).style.top  = player_body_temp[i].y * 30+"px";
+
+			/* check if the game will proceed to the next game or the game is already fnished*/
+			if(this.is_enemy === false && snake_parts.length > 20){
+				game.paused = true;
+
+				if(game.stage >= 3)
+					document.getElementById("congrats").style.display = "";
+				else
+					document.getElementById("proceed_next_stage").style.display = "";
+			}
+			/*End of check if the game will proceed to the next game or the game is already fnished*/
+
+
+			/* Show the head */
+			document.getElementById(this.head).style.left = this.x * 30+"px";
+			document.getElementById(this.head).style.top  = this.y * 30+"px";
+			/* End of Show the head */
+
+			/* Show the body */
+			for (var i = 1; i <  snake_parts.length; i++) {
+				if(snake_parts[i]){
+					var tail_id = this.is_enemy == false ? "player_tail_"+i : "enemy_tail_"+ this.enemy_index + "_" + i;
+					document.getElementById(tail_id).style.left = snake_parts[i].x * 30+"px";
+					document.getElementById(tail_id).style.top  = snake_parts[i].y * 30+"px";
 				}
 			}
+			/* End Show the body */
+
+
+			/*collision of own body*/
+				for (var i = 1; i < snake_parts.length; i++) {
+					if(this.is_enemy == false && snake_parts[0].x == snake_parts[i].x && snake_parts[0].y == snake_parts[i].y )
+						this.remove_player()
+					else if(this.is_enemy == true && snake_parts[0].x == snake_parts[i].x && snake_parts[0].y == snake_parts[i].y )
+						this.remove_player()
+				}
+			/*end of collision of body*/
 		};
-		/*end of show where location of player */
+		/*end of show where location of player/enemy */
 
-		/* show player body */
-		// this.show_player_body = function(){
-		// 	var last_loc = { x: player.player_body[0].x, y: player.player_body[0].y };
-		// 	/* length of */
-		// 	for (var i = 1; i < player.length; i++) {
-		// 		var temp_loc = player.player_body[i];
+		/* When the player eat foods */
+		this.add_body = function(){
+			snake_parts.push({
+				x : snake_parts[snake_parts.length - 1].x,
+				y : snake_parts[snake_parts.length - 1].y,
+			});
+		}
+		/* end of When the player eat foods */
 
-		// 		player.player_body[i] = {
-		// 			x : last_loc.x,
-		// 			y : last_loc.y,
-		// 		}
-
-		// 		last_loc = temp_loc;
-		// 	}
-
-		// 	for (var i = 1; i < player.player_body.length; i++) {
-		// 		document.getElementById("player_tail_" + i).style.left = (player.player_body[i].x) * 30+"px";
-		// 		document.getElementById("player_tail_" + i).style.top  = (player.player_body[i].y) * 30+"px";
-		// 	}
-		// };
-		/* end of show player body */
-
+		/* reset the snake parts when proceed to next game */
+		this.next_game = function(){
+			snake_parts = [{ x: 3.5, y: 3, last_loc: undefined}];
+			_init_snake(this);
+		}
+		/* end of reset the snake parts when proceed to next game */
 
 		/* Player movement */
 		this.movement = function(e){
@@ -318,24 +383,83 @@ var food = new food();
 	    		game.paused = false;
 
 	     	if(game.paused == false){
-				if (key == "37" && this.direction != "right"){
+				if (key == "37" && this.direction != "right")
 					this.direction = "left";
-				}
-				else if (key == "38" && this.direction != "down"){
+				else if (key == "38" && this.direction != "down")
 					this.direction = "up";
-				}
-				else if (key == "39" && this.direction != "left"){
+				else if (key == "39" && this.direction != "left")
 					this.direction = "right";
-				}
-				else if (key == "40" && this.direction != "up"){
+				else if (key == "40" && this.direction != "up")
 					this.direction = "down";
-				}
+
+				if (key == "65" && this.enemy_direction != "right")
+					this.enemy_direction = "left";
+				else if (key == "87" && this.enemy_direction != "down")
+					this.enemy_direction = "up";
+				else if (key == "68" && this.enemy_direction != "left")
+					this.enemy_direction = "right";
+				else if (key == "83" && this.enemy_direction != "up")
+					this.enemy_direction = "down";
 	     	}
 		}
 		/* end of Player movement */
 
+		/* function that will remove or respawn again a player */
+		this.remove_player = function(index = null, is_next_stage = false){
+			if(this.is_enemy === false){
+				for (var i = 0; i < snake_parts.length; i++) {
+					game.map[snake_parts[i].x - 0.5][snake_parts[i].y - 2] = 5;
 
+					if(snake_parts.length - 1 == i)
+						document.getElementById("player_data").remove();
+				}
+
+				snake_parts = [{ x: 3.5, y: 3, last_loc: undefined}];
+				this.x  = 3.5;
+				this.y  = 3;	
+				this.score = is_next_stage == false ? 0 : this.score;
+				this.direction = "right";
+
+				_init_snake(this);
+			}
+			else{
+				for (var i = 0; i < snake_parts.length; i++) {
+					try{
+						game.map[snake_parts[i].x - 0.5][snake_parts[i].y - 2] = 5;
+					}
+					catch(err){
+						console.log("nice")
+					}
+
+					if(snake_parts.length - 1 == i)
+						document.getElementById("enemy_"+this.enemy_index).remove();
+				}
+
+				snake_parts = [{ x: 30, y: 25, last_loc: undefined}];
+
+				this.score = 0;
+				this.x = (Math.floor((Math.random() * 55) + 3) +".5");
+				this.y = (Math.floor((Math.random() * 20) + 3));
+				
+				enemy_movement = Math.floor((Math.random() * 4) + 1);
+				
+				if (enemy_movement == 1)
+					this.direction =  "left";
+				else if (enemy_movement == 2)
+					this.direction =  "up";
+				else if (enemy_movement == 3)
+					this.direction =  "right";
+				else if (enemy_movement == 4)
+					this.direction =  "down";
+
+				_init_snake(this);
+			}
+		}
+		/* end of function that will remove or respawn again a player */
+
+		_init_snake(this);
 	}
+
 /* end of player function*/
 /* food function*/
 function food(){
@@ -343,8 +467,9 @@ function food(){
 	this.food = function(){
 		var food_timer = setInterval(function(){
 			if(!game.paused){
-				random_x = Math.floor((Math.random() * 60) + 0);
-				random_y = Math.floor((Math.random() * 20) + 0);
+				random_x = Math.floor((Math.random() * 48) + 10);
+				random_y = Math.floor((Math.random() * 16) + 5);
+
 				if(game.map[random_x][random_y] == 0){
 					var percentage_of_up = Math.floor((Math.random() * 10) + 1);
 					var up_type = 5;
@@ -373,181 +498,189 @@ function food(){
 /*end of food function*/
 /* game function*/
 function game(){
+	this.enemies = [];
 	this.users = [];
 	this.paused = false;
 	this.stage = 1; 
 	this.start_game = function(){
+		/* Create enemy */
+		var game = this;
+		for(var x = 0; x < 10; x++){
+			game.enemies.push(new Player(true, x));	
+		}
+
 		/* game start using interval time */
 		var game_timer = setInterval(function(){
-			if(!game.paused){
-				player_body_temp = player.player_body();
-				player_body_temp[0].x = player.x;
-				player_body_temp[0].y = player.y;
-				console.log(player_body_temp)
-				
 
+			if(!game.paused){
+				var players_score = [];
 				/* auto adding of direction of player*/
 				if(player.direction == "left")
-					player.x--;
+					(game.map[player.x - 1.5][player.y - 2] != 1) ? player.x-- : player.remove_player();
 				if(player.direction == "up")
-					player.y--;
+					(game.map[player.x - 0.5][player.y - 3] != 1) ? player.y-- : player.remove_player();
 				if(player.direction == "right")
-					player.x++;
+					(game.map[player.x + 0.5][player.y - 2] != 1) ? player.x++ : player.remove_player();
 				if(player.direction == "down")
-					player.y++;	
+					(game.map[player.x - 0.5][player.y - 1] != 1) ? player.y++ : player.remove_player();
 				/*end of  auto adding of direction of player*/
+				/* send the first move of the head*/
+				player.player_body(player.x, player.y, 0);
+				/* end of the first move of the head*/
+				/* Player Movements and getting food*/
 
+					/*player get food, big food, multiplier, big score*/
+					if(game.map[player.x - 0.5][player.y - 2] == 5){
+						game.map[player.x - 0.5][player.y - 2] = 0;
+						player.score = player.score + (10 * player.multiplier);
+						player.length = player.length + 1;
+						player.add_body();
+					}
+					else if(game.map[player.x - 0.5][player.y - 2] == 99){
+						game.map[player.x - 0.5][player.y - 2] = 0;
+						player.score = player.score + 10;
+						player.length = player.length + 5;
+						for (var i = 0; i < 5; i++) {
+							player.add_body();
+						}
+					}
+					else if(game.map[player.x - 0.5][player.y - 2] == 98){
+						game.map[player.x - 0.5][player.y - 2] = 0;
+						player.score = player.score + 10;
+						player.multiplier = player.multiplier + 1;
+					}
+					else if(game.map[player.x - 0.5][player.y - 2] == 97){
+						game.map[player.x - 0.5][player.y - 2] = 0;
+						player.score = player.score + 100;
+					}
+					/*end of player get food, big food, multiplier, big score*/
 
-				var snakes = enemy.snake_data;
-				for (var i = 0; i < snakes.length; i++) {
-					enemy_movement = Math.floor((Math.random() * 4) + 1);
-					if (enemy_movement == 1 && snakes[i].direction != "right"){
-						snakes[i].direction = "left";
-					}
-					else if (enemy_movement == 2 && snakes[i].direction != "down"){
-						snakes[i].direction = "up";
-					}
-					else if (enemy_movement == 3 && snakes[i].direction != "left"){
-						snakes[i].direction = "right";
-					}
-					else if (enemy_movement == 4 && snakes[i].direction != "up"){
-						snakes[i].direction = "down";
-					}
+					players_score.push({player_name : player.user_name, player_score : player.score});
+					/* end of diplay of score in the right side of the game dashboard */
+				/* End of Player Movements and getting food*/
+				
 
-					if (snakes[i].direction == "left"){
-						snakes[i].x--;
-					}
-					if (snakes[i].direction == "up"){
-						snakes[i].y--;
-					}
-					if (snakes[i].direction == "right"){
-						snakes[i].x++;
-					}
-					if (snakes[i].direction == "down"){
-						snakes[i].y++;
-					}
-				}
+				/* enemy movement*/
+					var snakes = game.enemies;
+					for (var i = 0; i < snakes.length; i++) {
+						enemy_movement = Math.floor((Math.random() * 4) + 1);
 
-				for (var i = 0; i < snakes.length; i++) {
-					if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 1){
-						if (enemy_movement == 1 && snakes[i].direction != "right"){
+						if (enemy_movement == 1 && snakes[i].direction != "right")
 							snakes[i].direction = "left";
-						}
-						else if (enemy_movement == 2 && snakes[i].direction != "down"){
+						else if (enemy_movement == 2 && snakes[i].direction != "down")
 							snakes[i].direction = "up";
-						}
-						else if (enemy_movement == 3 && snakes[i].direction != "left"){
+						else if (enemy_movement == 3 && snakes[i].direction != "left")
 							snakes[i].direction = "right";
-						}
-						else if (enemy_movement == 4 && snakes[i].direction != "up"){
+						else if (enemy_movement == 4 && snakes[i].direction != "up")
 							snakes[i].direction = "down";
+
+						if (snakes[i].direction == "left")
+							if(game.map[(snakes[i].x - 0.5) - 1][(snakes[i].y - 2)] != 1){ 
+								snakes[i].x--;
+								if(document.getElementsByClassName("enemy")[i] != undefined)
+									document.getElementsByClassName("enemy")[i].style.transform = "rotate(90deg)"
+							}
+							else{
+								snakes[i].remove_player(i);
+							}
+						if (snakes[i].direction == "up")
+							if(game.map[(snakes[i].x - 0.5)][(snakes[i].y - 2 ) - 1] != 1){
+								snakes[i].y--
+								if(document.getElementsByClassName("enemy")[i] != undefined)
+									document.getElementsByClassName("enemy")[i].style.transform = "rotate(180deg)"
+							} 
+							else
+								snakes[i].remove_player(i);
+						if (snakes[i].direction == "right")
+							if(game.map[(snakes[i].x - 0.5) + 1][(snakes[i].y - 2)] != 1)
+							{
+								snakes[i].x++
+								if(document.getElementsByClassName("enemy")[i] != undefined)
+									document.getElementsByClassName("enemy")[i].style.transform = "rotate(270deg)"
+							}
+							else
+								snakes[i].remove_player(i);
+						if (snakes[i].direction == "down")
+							if(game.map[(snakes[i].x - 0.5)][(snakes[i].y - 2) + 1] != 1){
+								snakes[i].y++
+								if(document.getElementsByClassName("enemy")[i] != undefined)
+									document.getElementsByClassName("enemy")[i].style.transform = "rotate(360deg)"
+							}
+							 else
+							 	snakes[i].remove_player(i);
+
+						if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 5){
+							game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+							snakes[i].score = snakes[i].score + (10 * snakes[i].multiplier);
+							snakes[i].length = snakes[i].length + 1;
+							snakes[i].add_body();
+						}
+						else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2]  == 99){
+							game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+							snakes[i].score = snakes[i].score + 10;
+							snakes[i].length = snakes[i].length + 5;
+							for (var k = 0; k < 5; k++) {
+								snakes[i].add_body();
+							}
+						}
+						else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2]  == 98){
+							game.map[snakes[i].x - 0.5][snakes[i].y - 2]  = 0;
+							snakes[i].score = snakes[i].score + 10;
+							snakes[i].multiplier = snakes[i].multiplier + 1;
+						}
+						else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2]  == 97){
+							game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
+							snakes[i].score = snakes[i].score + 100;
 						}
 
-						if (snakes[i].direction == "left"){
-							snakes[i].x--;
-						}
-						if (snakes[i].direction == "up"){
-							snakes[i].y--;
-						}
-						if (snakes[i].direction == "right"){
-							snakes[i].x++;
-						}
-						if (snakes[i].direction == "down"){
-							snakes[i].y++;
-						}
+						players_score.push({player_name : "user_AI_"+ i, player_score : snakes[i].score});
+						snakes[i].player_body(snakes[i].x, snakes[i].y, 0);
+						snakes[i].show_player();
+						snakes[i].collided(snakes);
 					}
 
 
-					/*enemy get food, big food, multiplier, big score*/
-					if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 5){
-						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
-						snakes[i].score = snakes[i].score + (10 * snakes[i].multiplier);
-						snakes[i].length = snakes[i].length + 1;
+				/* end of enemy movement*/
+
+				/* End of Player Movements and getting food*/
+				/* update the score in game dashboard */
+					var sort_player_score = players_score.slice(0);
+					sort_player_score.sort(function(a,b) {return a.player_score - b.player_score;}); //magic
+
+					document.getElementById("in_game_score").innerHTML = "";
+
+					for(var key in sort_player_score){
+						var table = document.getElementById("in_game_score");
+						var row = table.insertRow(0);
+						var cell1 = row.insertCell(0);
+						var cell2 = row.insertCell(1);
+						cell1.innerHTML = sort_player_score[key].player_name;
+						cell2.innerHTML = sort_player_score[key].player_score;
 					}
-					else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 99){
-						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
-						snakes[i].score = snakes[i].score + 10;
-						snakes[i].length = snakes[i].length + 5;
-					}
-					else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 98){
-						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
-						snakes[i].score = snakes[i].score + 10;
-						snakes[i].multiplier = snakes[i].multiplier + 1;
-					}
-					else if(game.map[snakes[i].x - 0.5][snakes[i].y - 2] == 97){
-						game.map[snakes[i].x - 0.5][snakes[i].y - 2] = 0;
-						snakes[i].score = snakes[i].score + 100;
-					}
-					/*end of enemy get food, big food, multiplier, big score*/
+
+					player.show_player();
+					player.collided(snakes);
+				/* end update the score in game dashboard */
+
+				for(var x = 1; x <= 3; x++){
+					game.map[x][1] = 0;
 				}
-
-				enemy.show_enemy();
-
-				/* player hit wall , show modal of quit*/
-				if(game.map[player.x - 0.5][player.y - 2] == 1){
-					game.paused = true;
-					document.getElementById("player_quit").style.display = "";
-				}
-				/*end of player hit wall , show modal of quit*/
-
-				/*player get food, big food, multiplier, big score*/
-				if(game.map[player.x - 0.5][player.y - 2] == 5){
-					game.map[player.x - 0.5][player.y - 2] = 0;
-					player.score = player.score + (10 * player.multiplier);
-					player.length = player.length + 1;
-				}
-				else if(game.map[player.x - 0.5][player.y - 2] == 99){
-					game.map[player.x - 0.5][player.y - 2] = 0;
-					player.score = player.score + 10;
-					player.length = player.length + 5;
-				}
-				else if(game.map[player.x - 0.5][player.y - 2] == 98){
-					game.map[player.x - 0.5][player.y - 2] = 0;
-					player.score = player.score + 10;
-					player.multiplier = player.multiplier + 1;
-				}
-				else if(game.map[player.x - 0.5][player.y - 2] == 97){
-					game.map[player.x - 0.5][player.y - 2] = 0;
-					player.score = player.score + 100;
-				}
-				/*end of player get food, big food, multiplier, big score*/
-
-
-				/* check if the game will proceed to the next game or the game is already fnished*/
-				if(player.length > 4){
-					game.paused = true;
-
-					if(game.stage >= 3)
-						document.getElementById("congrats").style.display = "";
-					else
-						document.getElementById("proceed_next_stage").style.display = "";
-				}
-				/* end of check if the game will proceed to the next game or the game is already fnished*/
-
-				/* diplay of score in the right side of the game dashboard */
-				document.getElementById("in_game_score").innerHTML = "";
-				var table = document.getElementById("in_game_score");
-				var row = table.insertRow(0);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-				cell1.innerHTML = player.user_name;
-				cell2.innerHTML = player.score;
-				/* end of diplay of score in the right side of the game dashboard */
-
-				player.show_player();
+			
 				game.create_map();
 			}
-		}, 300);
+		}, 80);
 	}
-	this.proceed_next_stage = function(){
+	/* Proceed to the next game */
+	this.proceed_next_stage = function(same_stage = false){
 		game.paused = false;
 		document.getElementById("proceed_next_stage").style.display = "none";
-		player.x = 3.5;
-		player.y = 3;
-		player.length = 3;
-		player.direction = "right";
-		game.stage = game.stage + 1;
-		player.score = player.score;
+		game.stage = (same_stage == false) ? game.stage + 1 : game.stage;
+		player.remove_player(1, true)
+		game.enemies = [];
+
+		for(var x = 0; x < 10; x++){
+			game.enemies.push(new Player(true, x));	
+		}
 
 		for (var i = 0; i < game.map.length; i++) {
 			for (var k = 0; k < game.map[i].length; k++) {
@@ -561,6 +694,8 @@ function game(){
 		game.create_map()
 		player.show_player()
 	}
+	/* End of Proceed to the next game */
+
 	
 	this.map =[
 		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -627,6 +762,7 @@ function game(){
 		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 	];
 
+	/* Generate of map */
 	this.create_map = function(){
 		var mapOutput = "";
 
@@ -639,13 +775,13 @@ function game(){
 	           	else if (this.map[i][k] == 1)
 					mapOutput += "<div class='undestroyable'></div>";
 	           	else if (this.map[i][k] == 5)
-					mapOutput += "<div class='food'></div>";
+					mapOutput += "<div class='food'><span></span></div>";
 	           	else if (this.map[i][k] == 99)
-					mapOutput += "<div class='big_food'></div>";
+					mapOutput += "<div class='big_food'><span></span></div>";
 	           	else if (this.map[i][k] == 98)
-					mapOutput += "<div class='multiplier'></div>";
+					mapOutput += "<div class='multiplier'><span></span></div>";
 	           	else if (this.map[i][k] == 97)
-					mapOutput += "<div class='big_score'></div>";
+					mapOutput += "<div class='big_score'><span></span></div>";
 			}
 
 			mapOutput += "</div>";
@@ -653,63 +789,5 @@ function game(){
 
 		document.getElementById("game_container_main").innerHTML = mapOutput;
 	}
+	/* end of +Generate of map */
 }
-
-function enemy(){
-	this.enemy_limit = 1;
-	this.snake_data = []
-	this.snakes = function(){
-		for(var index = 0; index < this.enemy_limit; index++){
-			this.snake_data.push({
-				enemy_id : index,
-				length : 3,
-				x : 20.5,
-				y : 11,
-				multiplier : 1,
-				direction : ((Math.floor((Math.random() * 10) + 1) > 5) ? "left" : "right")
-			})
-		}
-	}
-	this.display_enemy = function(){
-		var container = document.getElementById('enemy_data');
-		var firstChild = container.childNodes[0];
-		var snakes = this.snake_data;
-        for (var i = snakes.length - 1; i >= 0; i--) {
-        	var test = document.createElement('div')
-			test.setAttribute("id", "enemy_data_"+i);
-			container.appendChild(test, container);    
-
-			var haha = document.getElementById("enemy_data_"+i);
-
-			var newDiv = document.createElement('div');
-			newDiv.setAttribute("id", "enemy_head_"+i);
-			newDiv.setAttribute("enemy_head_id", i);
-			newDiv.setAttribute("class", "enemy");
-			haha.appendChild(newDiv, haha);   
-
-  	     	for (var k = snakes[i].length - 1; k >= 1; k--) {
-     			var newDiv = document.createElement('div');
-				newDiv.setAttribute("id", "enemy_tail_"+i+"_"+k);
-				newDiv.setAttribute("enemy_tail_id", k);
-				newDiv.setAttribute("class", "enemy_tail");
-				haha.appendChild(newDiv, haha);   
-			}
-		}
-	}
-	this.show_enemy = function(){
-		var snakes = this.snake_data;
-		for (var i = 0; i < snakes.length; i++) {
-			document.getElementById("enemy_head_"+i).style.left = snakes[i].x * 30+"px";
-			document.getElementById("enemy_head_"+i).style.top  = snakes[i].y * 30+"px";
-		}
-	};
-
-	this.movement = function(){
-		var snakes = this.snake_data;
-		
-	}
-}
-
-console.log(enemy.movement());
-console.log(enemy.snakes());
-console.log(enemy.display_enemy());

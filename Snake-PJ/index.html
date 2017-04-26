@@ -32,25 +32,24 @@
 			<button id="score_reset">Reset</button>
 		</div>
 	</div>
+	<div id="game_container_header" style="display:none">
+		<div id="game_header_left">
+			<h1>SnekJS</h1>
+			<span id="game_stage">Stage 1</span>
+		</div>
+		<div id="game_header_right">
+			<a href="#" id="continue_game" style="display:none">Resume</a>
+			<a href="#" id="pause_game">Pause</a>
+			<a href="#" id="restart_game">Restart</a>
+			<a href="#" id="quit_game">Quit</a>
+		</div>	
+	</div>
 	<div id="game_dashboard" style="display:none">
-		<div id="game_container_header">
-			<div id="game_header_left">
-				<h1>SnekJS</h1>
-				<span id="game_stage">Stage 1</span>
-			</div>
-			<div id="game_header_right">
-				<a href="#" id="continue_game" style="display:none">Resume</a>
-				<a href="#" id="pause_game">Pause</a>
-				<a href="#" id="restart_game">Restart</a>
-				<a href="#" id="quit_game">Quit</a>
-			</div>	
-		</div>
+		
 		<div id="game_container_main"></div>
-		<div id="player_data">
-		</div>
-		<div id="enemy_data">
-		</div>
-		<div id="game_score_container">
+		
+	</div>
+		<div id="game_score_container" style="display:none">
 			<h1>High Score</h1>
 			<table>
 				<thead>
@@ -88,7 +87,6 @@
 			<h1>Congrats!</h1>
 			<button id="congrats_quit">Quit</button>	
 		</div>
-	</div>
 </body>
 <script src="assets/index.js"></script>
 </html>

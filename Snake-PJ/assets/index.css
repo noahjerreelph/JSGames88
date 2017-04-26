@@ -41,106 +41,131 @@
 
 }
 
-#game_dashboard #game_container_header{	
+#game_container_header{	
 	border: 1px solid black;
 	width: 98%;
 	padding: 5px 0px;
 }
-#game_dashboard #game_container_header{
+#game_container_header{
 	display: inline-block;
 }
-#game_dashboard #game_container_header #game_header_left{
+#game_container_header #game_header_left{
 	display: inline-block;
 }
 
-#game_dashboard #game_container_header #game_header_left h1 {
+#game_container_header #game_header_left h1 {
 	display: inline-block;
 }
-#game_dashboard #game_container_header #game_header_left span{
+#game_container_header #game_header_left span{
 	display: inline-block;
 }
-#game_dashboard #game_container_header #game_header_right{
+#game_container_header #game_header_right{
 	display: inline-block;
 	float: right;
 }
-#game_dashboard #game_container_header #game_header_right a{
+#game_container_header #game_header_right a{
 	font-size: 33px;
 	text-decoration: none;
 	color: black;
 	margin-left: 20px;
 }
-#game_dashboard #game_container_header #game_header_right a:nth-child(4){
+#game_container_header #game_header_right a:nth-child(4){
 	padding-right: 20px;
 }
 
 #game_dashboard #game_container_main{
 	margin: 0px;
-	width: 98%;
-	height: 800px;
-	border: 1px solid red;
+	// width: 98%;
+	// height: 800px;
 	position: absolute;
+	background-color: green;
 }
 
-#game_dashboard #game_score_container{
+#game_score_container{
 	margin: 0px;
 	width: 10%;
 	height: 500px;
 	border: 1px solid blue;
 	position: absolute;
-	right: 27px;
 	background-color: silver;
 	opacity: .5;
+	right: 80px;
+    bottom: 345px;
+}
+#game_score_container thead th{
+	width: 110px;
+}
+#game_score_container tbody{
+	text-align: center;
 }
 
-#game_dashboard #player_paused{
+#player_paused{
 	border: 1px solid red;
 	padding: 10px 30px;
 	position: absolute;
 	right: 815px;
 	text-align: center;
-	bottom: 20px;
+	bottom:  500px;;
+	background-color: gray;
+}
+#player_paused.disabled{
+	pointer-events: none;
 }
 
-#game_dashboard #player_restart{
+#player_restart{
 	border: 1px solid red;
 	padding: 10px 30px;
 	position: absolute;
 	right: 777px;
 	text-align: center;
-	bottom: 3px;
+	bottom:  500px;
+	background-color: gray;
+
 }
 
-#game_dashboard #player_quit{
+#player_restart.disabled{
+	pointer-events: none;
+}
+
+#player_quit{
 	border: 1px solid red;
 	padding: 10px 30px;
 	position: absolute;
 	right: 777px;
 	text-align: center;
-	bottom: 3px;
+	bottom:  500px;;
+	background-color: gray;
+
 }
 
-#game_dashboard #proceed_next_stage{
+#player_quit.disabled{
+	pointer-events: none;
+}
+
+#proceed_next_stage{
 	border: 1px solid red;
 	padding: 10px 30px;
 	position: absolute;
 	right: 777px;
 	text-align: center;
-	bottom: 3px;
+	bottom:  500px;;
+	background-color: gray;
+
 }
-#game_dashboard #congrats{
+#congrats{
 	border: 1px solid red;
 	padding: 10px 30px;
 	position: absolute;
 	right: 777px;
 	text-align: center;
-	bottom: 3px;
+	bottom:  500px;;
+	background-color: gray;
+
 }
 
-#game_dashboard #player_restart button{
+#player_restart button{
 	width: 50px;
 }
-
-
 
 #game_container_main .row{
 	display: inline-block;
@@ -158,52 +183,94 @@
 	width: 30px;
 }
 #game_container_main .food{
-	background-color: brown;
 	height: 30px;
 	width: 30px;
+}
+#game_container_main .food span{
+	background-color: brown;
+    border-radius: 25px;
+    display: block;
+	height: 20px;
+	width: 20px;
 }
 #game_container_main .big_food{
-	background-color: yellow;
-	height: 30px;
-	width: 30px;
-}
-#game_container_main .multiplier{
-	background-color: blue;
-	height: 30px;
-	width: 30px;
-}
-#game_container_main .big_score{
-	background-color: green;
 	height: 30px;
 	width: 30px;
 }
 
+#game_container_main .big_food span{
+    border-radius: 25px;
+    background-color: yellow;
+    display: block;
+	height: 20px;
+	width: 20px;
+}
+#game_container_main .multiplier{
+	height: 30px;
+	width: 30px;
+}
+#game_container_main .multiplier span{
+	background-color: blue;
+    border-radius: 25px;
+    display: block;
+	height: 20px;
+	width: 20px;
+}
+#game_container_main .big_score{
+	height: 30px;
+	width: 30px;
+}
+
+#game_container_main .big_score span{
+	background-color: violet;
+    display: block;
+    border-radius: 25px;
+	height: 20px;
+	width: 20px;
+}
+
 #game_dashboard .player{
-	background: url("../assets/images/images.jpg");
+	background: url("../assets/images/bunar.jpg");
 	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	// background-color: white;
 	background-size: cover;
 	position: absolute;
 	width: 30px;
+	border-radius: 5px;
 	height: 30px;	
 }
 #game_dashboard #player_head_0{
-	background: url("../assets/images/player_head.png");
+	background: url("../assets/images/bunar.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-position: center;
+	// background-color: blue;
 	position: absolute;
+	border-radius: 10px;
 	width: 30px;
 	height: 30px;	
 }
 
 #game_dashboard .enemy{
-	background-color: orange;
+	background: url("../assets/images/asdasd.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 	position: absolute;
+	border-radius: 10px;
 	height: 30px;
 	width: 30px;
 }
 #game_dashboard .enemy_tail{
-	background-color: pink;
+	// background-color: #D7C704;
+	background: url("../assets/images/untitled.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
 	position: absolute;
+	border-radius: 5px;
 	height: 30px;
 	width: 30px;
 }
