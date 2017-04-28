@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Checker Game</title>
+	<link rel="stylesheet" href="assets/css/index.css">
+
+</head>
+<body>
+	<div id="wrapper">
+		<div id="login_dashboard">
+			<h1>Dama Game</h1>
+			<div id="selection_dashboard">
+				<div id="game_options">
+					<button id="player_1">1 player</button>
+					<button id="player_2">2 player</button>
+				</div>
+				<div id="show_score">
+					<button id="show_player_history_game">Game Records</button>
+					<button>Continue</button>
+				</div>
+			</div>
+			<div id="play_with_AI_dashboard">
+				<h3>Play with AI</h3>
+				<input type="text" placeholder="Enter first player name">
+				<select name="" id="">
+					<option value="1">Easy</option>
+					<option value="2">Medium</option>
+					<option value="3">Hard</option>
+				</select>
+				<div id="AI_start_game">
+					<button>Start</button>
+					<button id="AI_start_game_cancel">Cancel</button>
+				</div>
+			</div>
+			<div id="play_with_player_2_dashboard">
+				<h3>Play with Friend</h3>
+				<input type="text" placeholder="Enter first player name">
+				<input type="text" placeholder="Enter second player name">
+				<div id="player_2_start_game">
+					<button>Start</button>
+					<button id="play_with_player_2_dashboard_cancel">Cancel</button>
+				</div>
+			</div>
+			<div id="show_game_score">
+				<h3>Dama Game Records</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>Game No.</th>
+							<th>Game Type</th>
+							<th>Duration</th>
+							<th>Winner</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Play with Ai</td>
+							<td>2 mins</td>
+							<td>PJ</td>
+						</tr>
+					</tbody>
+				</table>
+				<button>Clear</button>
+				<button id="show_game_score_cancel">Cancel</button>
+			</div>
+		</div>
+		<div id="game_dashboard" style="display:none"></div>
+	</div>
+</body>
+<script src="assets/js/index.js"></script>
+
+</html>
