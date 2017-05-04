@@ -8,11 +8,12 @@
 .row{
 	display: inline-block;
 }
+
 .white{
 	height: 80px;
 	width: 80px;
 	background-color: white;
-
+    position: relative;
 }
 .black{
 	height: 80px;
@@ -30,7 +31,7 @@
 	text-align: center;
 }
 
-h1{
+#login_dashboard h1{
 	margin-top: 100px;
 	margin-bottom: 50px;
 }
@@ -75,3 +76,106 @@ h3{
 	width: 160px;
 }
 
+.player_1_piece{
+	border: 1px solid red; 
+	border-radius: 25px;
+    width: 50px;
+    height: 50px;
+	background-color: red;
+    position: absolute;
+    top: 18%;
+    left: 18%;
+}
+
+.player_1_piece p,
+.player_2_piece p {
+    text-align: center;
+    font-size: 19px;
+}
+
+.player_2_piece{
+	border: 1px solid blue; 
+	border-radius: 25px;
+    width: 50px;
+    height: 50px;
+	background-color: blue;
+    position: absolute;
+    top: 18%;
+    left: 18%;
+}
+
+#left_container{
+	border: 1px solid red;
+	width: 8%;
+	text-align: center;
+	display: inline-block;
+	height: 100vh;
+}
+#game_dashboard h1{
+	padding: 10px;
+	border: 2px solid black;
+}
+
+#left_container #game_information{
+	margin-bottom: 137%;
+}
+#left_container #game_information h3{
+	margin: 20px 0px;
+}
+
+#left_container button{
+	display: block;
+    width: 85%;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+#main_container {
+	border: 1px solid blue;
+	// width: 91.555%;
+	display: inline-block;
+	vertical-align: top;
+	height: 100vh;
+}
+#main_container #game{
+	margin: 20px;
+	border: 1px solid brown;
+	width: 97.555%;
+	display: inline-block;
+	vertical-align: top;
+	height: 96vh;
+}
+
+.piece_selected{
+	border: 3px solid green;
+}
+.can_move_piece{
+	border: 3px solid green;
+    border-radius: 25px;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    position: absolute;
+    top: 18%;
+    left: 18%;
+}
+
+#player_quit_modal{
+    width: 200px;
+    position: relative;
+    left: 800px;
+    text-align: center;
+    border: 1px solid gray;
+    background-color: gray;
+    bottom: 800px;
+}
+#player_complete{
+    width: 200px;
+    position: relative;
+    left: 800px;
+    text-align: center;
+    border: 1px solid gray;
+    background-color: gray;
+    bottom: 800px;
+}
