@@ -48,3 +48,105 @@
 #record div{
 	text-align: right;
 }
+#wrapper-game{
+
+}
+#wrapper-game h1{
+    padding: 10px 5px;
+    border: 1px solid black;
+}
+#wrapper-game #controls{
+	display: inline-block;
+    border: 1px solid black;
+    height: 600px;
+    text-align: center;
+    width: 150px;
+}
+#wrapper-game #controls #undo-btn{
+	margin-top: 130px;
+}
+#wrapper-game #controls button{
+	display: block;
+	margin: 25px auto;
+	width: 80px;
+	height: 30px;
+}
+#wrapper-game #board{
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 100px;
+    position: absolute;
+    height: 480px;
+    width: 480px;
+    border: 1px solid black;
+}
+#wrapper-game #controls #game_no,#wrapper-game #controls #timer,#wrapper-game #controls #player{
+	border-bottom: 1px solid black;
+	height: 60px;
+}
+#wrapper-game #controls #game_no h3{
+	margin: 10px 0px;
+}
+#wrapper-game #controls #timer span,#wrapper-game #controls #player span{
+	display: block;
+	margin: 10px 0px;
+}
+#board #quit{
+    border: 1px solid black;
+    display: inline-block;
+    height: 100px;
+    padding: 20px;
+    position: absolute;
+    text-align: center;
+    vertical-align: top;
+    width: 300px;
+    background-color: white;
+    top: 180px;
+    left: 180px;
+}
+#board #pause{
+	display: inline-block;
+    position: absolute;
+    background: white;
+    width: 200px;
+    border: 1px solid black;
+    padding: 20px;
+    text-align: center;
+    height: 70px;
+    left: 150px;
+    top: 200px;
+}
+#board #pause h1{
+	border: none;
+}
+
+#board #quit div{
+	margin-top: 25px;
+}
+#board #quit div button{
+	margin: 5px 10px;
+	padding: 3px 10px;
+	height: 25px;
+}
+.player-piece, .enemy-piece, .black, .white{
+	height: 60px !important;
+	width: 60px;
+	display: inline-block;
+	position: absolute;
+}
+.player-piece{
+	background-image: url('../images/red.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.enemy-piece{
+	background-image: url('../images/black.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.black{
+	background-color: black;
+}
+.white{
+	background-color: white;
+}
