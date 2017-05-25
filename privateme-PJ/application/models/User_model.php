@@ -31,11 +31,11 @@ class User_model extends CI_Model {
 					$data["message"] = "Wrong email address or password!";
 				}
 				else if (!empty($user_email) && !empty($user_data)){
-					if($user_email["is_gmail"] == 0){
-						$this->session->set_userdata($user_data);
+					if($user_email["google_id"] == NULL){
 						$data["status"] = TRUE;
+						$this->session->set_userdata("user_data", $user_data);
 					}
-					else if($user_email["is_gmail"] == 1){
+					else if($user_email["google_id"] != NULL){
 						$data["status"] = FALSE;
 						$data["message"] = "Use google login";
 					}
@@ -56,20 +56,25 @@ class User_model extends CI_Model {
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[4]');
 		$this->form_validation->set_rules('first_name', 'First Name', 'required|min_length[2]');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'required|min_length[2]');
-		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|min_length[4]|matches[password]');
 
 		if($this->form_validation->run() == FALSE){
 			$data['message'] = validation_errors();
 			$data['status'] = FALSE;
 		}
 		else{
-			unset($post_data["confirm_password"]);
 			$post_data["created_at"] = date("Y-m-d H:i:s");
 
-			$valid_email = $this->db->where("email_address", $post_data["email_address"])->get("users")->row_array();
+			$valid_email =  $this->get_user($post_data["email_address"]);
 
 			if(empty($valid_email)){
-				$data['status'] = $this->insert_user($post_data["email_address"]);
+				$data['status'] = $this->insert_user($post_data);
+				$data['user_id'] = $this->db->insert_id();
+
+
+				if($data['status']){
+					$data["user_data"] = $this->get_user(NULL, NULL, $data['user_id']);
+					$this->session->set_userdata("user_data", $data["user_data"]);
+				}
 			}
 			else{
 				$data['status'] = FALSE;
@@ -78,18 +83,6 @@ class User_model extends CI_Model {
 		}
 
 		return $data;
-	}
-
-	public function get_user($email_address, $password = NULL){
-		#return $this->db->where("email_address", $email_address)->get("users")->row_array();
-
-		$this->db->select("id as user_id, email_address, first_name, last_name, is_gmail") 
-				 ->where("email_address", $email_address);
-
-		if($password != null)
-			$this->db->where("password", $password) ;
-
-		return	$this->db->get("users")->row_array();
 	}
 
 	/* Google login function */
@@ -115,7 +108,7 @@ class User_model extends CI_Model {
 			$update_user = array(
 				"first_name"	=> $google_token["given_name"],
 				"last_name"		=> $google_token["family_name"],
-				"is_gmail" 		=> 1,
+				"google_id" 	=> $google_token["id"],
 				"updated_at" 	=> date("Y-m-d H:i:s")
 			);
 
@@ -130,7 +123,7 @@ class User_model extends CI_Model {
 				"last_name"		=> $google_token["family_name"],
 				"email_address" => $google_token["email"],
 				"password" 		=> "googleuser",
-				"is_gmail" 		=> 1,
+				"google_id" 	=> $google_token["id"],
 				"created_at" 	=> date("Y-m-d H:i:s")
 			);
 
@@ -157,5 +150,98 @@ class User_model extends CI_Model {
 		return $this->db->insert('users', $user_data);
 	}
 
+
+	public function get_user($email_address = NULL, $password = NULL, $user_id = NULL){
+		$this->db->select("id, email_address, first_name, last_name, google_id");
+
+		if($email_address != null) 
+			$this->db->where("email_address", $email_address);
+
+		if($password != null)
+			$this->db->where("password", $password) ;
+
+		if($user_id != null)
+			$this->db->where("id", $user_id);
+
+		return	$this->db->get("users")->row_array();
+	}
+
+
+	public function add_user_account($post_data){
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('account_name', 'Account Name', 'required|min_length[2]');
+		$this->form_validation->set_rules('savings_amount', 'Saving Amount', 'required');
+		$this->form_validation->set_rules('checkings_amount', 'Saving Amount', 'required');
+		$this->form_validation->set_rules('description', 'Description', 'required|min_length[2]');
+
+		if($this->form_validation->run() == FALSE){
+			$data['message'] = validation_errors();
+			$data['status'] = FALSE;
+		}
+		else{
+			$add_account_data = array(
+				"user_id"		=> $post_data["user_id"],
+				"account_name"	=> $post_data["account_name"],
+				"description" 	=> $post_data["description"],
+				"created_at" 	=> date("Y-m-d H:i:s")
+			);
+
+			$insert_user_account = $this->db->insert("accounts", $add_account_data);
+
+			if($insert_user_account){
+				$insert_user_account_data = array(
+					"user_id"       => $post_data["user_id"],
+					"account_id"    => $this->db->insert_id(),
+					"created_at" 	=> date("Y-m-d H:i:s")
+				);
+
+				// $add_account_type =  array(
+				// 	array(
+				// 		"user_id"       => $post_data["user_id"],
+				// 		"account_id"    => $this->db->insert_id(),
+				// 		"type" 			=> CHECKINGS,
+				// 		"amount" 		=> $post_data["checkings_amount"],
+				// 		"created_at" 	=> date("Y-m-d H:i:s"),
+				// 		"updated_at" 	=> NULL
+				// 		// $insert_user_account_data["type"] 	= CHECKINGS,
+				// 		// $insert_user_account_data["amount"] => $post_data["checkings_amount"],
+				// 	),
+				// 	array(
+				// 		"user_id"       => $post_data["user_id"],
+				// 		"account_id"    => $this->db->insert_id(),
+				// 		"type" 	=> SAVINGS,
+				// 		"amount" 	=> $post_data["savings_amount"],
+				// 		"created_at" 	=> date("Y-m-d H:i:s"),
+				// 		"updated_at" 	=> NULL
+				// 		// $insert_user_account_data["type"] 	=> SAVINGS,
+				// 		// $insert_user_account_data["amount"] => $post_data["savings_amount"],
+				// 	)
+				// );
+				// $insert_account_type = $this->db->insert_batch('account_types', $insert_user_account_data); 
+				
+				for ($i = 1; $i <=2; $i++) { 
+					$insert_user_account_data["type"] 	= (($i == 1) ? CHECKINGS : SAVINGS);
+					$insert_user_account_data["amount"] = (($i == 1) ? $post_data["checkings_amount"] : $post_data["savings_amount"]);
+					
+				 	$this->db->insert('account_types', $insert_user_account_data);		
+				}
+
+
+
+				if($insert_user_account_data){
+					$session_user = $this->get_user(NULL, NULL, $post_data["user_id"]);
+					$this->session->set_userdata("user_data", $session_user);
+
+					$data["status"] = TRUE;
+				}
+			}
+		}
+
+		return $data;
+	}
+
+	public function get_user_account($user_id){
+		return $this->db->where("accounts.user_id", $user_id)->get("accounts")->row_array();
+	}
 }
 //eof

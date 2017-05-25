@@ -32,11 +32,14 @@ class Users extends CI_Controller {
 			$token["id_token"] = NULL;
 			$this->session->set_userdata('google_token', $token);	
 			$this->google_token = (object) $token;
-			
 			$user_session = $this->User_model->get_google_user($this->google_token);
-			$this->session->set_userdata('user_session', $user_session);
+			$this->session->set_userdata($user_session);
 		}
 		
 		redirect(base_url());
+	}
+	
+	public function add_user_account(){
+		echo json_encode($this->User_model->add_user_account($this->input->post()));
 	}
 }

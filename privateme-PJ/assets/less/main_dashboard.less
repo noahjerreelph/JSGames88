@@ -1,0 +1,110 @@
+#wrapper{
+	width: 100%;
+	#header{
+		margin-top: 10px;
+		padding: 10px;
+		border: 1px solid black;
+		height: 50px;
+
+		.agent_dashboard{
+			width: 30px;
+			height: 30px;
+		}
+
+		span{
+			font-size: 15px;
+		}
+	
+		.dashboard_logo{
+			display: inline-block;
+		}
+
+		.dashboard_setting{
+			cursor: pointer;
+			margin-top: 5px;
+			display: inline-block;
+
+			#dropdown_setting{
+				top: 58px;
+			}
+		}
+
+	}
+
+	#container{
+		clear: both;
+		padding: 12px 0px 12px 12px;
+
+		#left_content{
+			display: inline-block;
+			width: 30%;
+			#activities{
+				border: 1px solid black;
+
+			ul{
+				li{
+					margin-bottom: 10px;
+				    list-style: none;
+
+						.activity_name{
+							border-bottom: 1px solid black;
+							height: 30px;
+							padding: 5px;
+
+							p{
+								display: inline-block;
+
+								&:nth-child(1){
+									float: left;
+								}
+								&:nth-child(2){
+									float: right;
+								}
+							}
+						}
+						.activity_descriptions{
+							padding: 10px;
+
+							.left_description{
+								display: inline-block;
+								text-align: center;
+								width: 49%;
+							}
+							.right_description{
+								border-left: 1px solid black; 
+								display: inline-block;
+								width: 49%;
+								padding: 10px;
+								
+								h2{
+									margin-left: 38%;
+								}
+							}
+						}
+					}
+				}
+			}
+		}	
+
+		#main_content{
+			display: inline-block;
+			vertical-align: top;
+			width: 69%;
+			
+			#highcharts_section{
+				padding: 10px;
+				border: 1px solid black;
+
+				h1{
+					display: inline-block;
+				}
+				h3{
+					display: inline-block;
+				}
+				.highcharts-container{
+				}
+			}
+
+		}
+	}
+}

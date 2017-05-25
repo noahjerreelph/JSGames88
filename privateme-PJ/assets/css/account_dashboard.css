@@ -1,0 +1,448 @@
+#wrapper {
+  width: 100%;
+}
+#wrapper #header {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  height: 50px;
+}
+#wrapper #header .agent_dashboard {
+  width: 30px;
+  height: 30px;
+}
+#wrapper #header span {
+  font-size: 15px;
+}
+#wrapper #header .dashboard_logo {
+  display: inline-block;
+}
+#wrapper #header .dashboard_setting {
+  cursor: pointer;
+  margin-top: 5px;
+  display: inline-block;
+}
+#wrapper #header .dashboard_setting #dropdown_setting {
+  top: 58px;
+}
+#wrapper #container {
+  position: absolute;
+  width: 100%;
+}
+#wrapper #container #left_content {
+  display: inline-block;
+  padding: 10px;
+  width: 10%;
+}
+#wrapper #container #left_content li {
+  padding: 5px 10px;
+}
+#wrapper #container #left_content #top_navigation {
+  border: 1px solid black;
+  border-bottom: 1px solid black;
+}
+#wrapper #container #left_content #bottom_navigation {
+  padding: 10px;
+  border: 1px solid black;
+  border-bottom: 1px solid black;
+  height: 93vh;
+}
+#wrapper #container #main_content {
+  margin-top: 10px;
+  width: 89.77%;
+  display: inline-block;
+  vertical-align: top;
+}
+#wrapper #container #main_content #budget_field {
+  border: 1px solid black;
+}
+#wrapper #container #main_content #budget_field .budget_filter {
+  margin: 20px 0px 20px 75%;
+}
+#wrapper #container #main_content #budget_field #budget_content {
+  height: 100.5vh;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data {
+  display: inline-block;
+  border: 1px solid black;
+  vertical-align: top;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data:first-child {
+  vertical-align: bottom;
+  margin: 0px 20px;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data:not(:first-child) {
+  margin: 0px 60px;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data .budget_info {
+  text-align: center;
+  border: 1px solid black;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data .budget_info h3 {
+  margin-top: 10px !important;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data .budget_info .budget_date {
+  display: inline-block;
+  width: 40px;
+  margin-right: 110px;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data .budget_info .budget_total {
+  vertical-align: top;
+  display: inline-block;
+  width: 40px;
+  margin-top: 10px;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data table thead tr th {
+  padding: 5px 10px;
+  width: 115px;
+}
+#wrapper #container #main_content #budget_field #budget_content .budget_data table tbody tr td {
+  padding: 5px 10px;
+  width: 115px;
+}
+#wrapper #container #main_content #report_field {
+  border: 1px solid black;
+}
+#wrapper #container #main_content #report_field .report_filter {
+  margin: 20px 0px;
+}
+#wrapper #container #main_content #report_field .report_filter select {
+  width: 200px !important;
+  display: inline;
+}
+#wrapper #container #main_content #report_field .report_filter select:nth-child(1) {
+  margin-left: 20px;
+}
+#wrapper #container #main_content #report_field .report_filter select:nth-child(2) {
+  margin-right: 52.5%;
+}
+#wrapper #container #main_content #report_field #report_content {
+  padding: 10px;
+}
+#wrapper #container #main_content #report_field #report_content h2:nth-child(1),
+#wrapper #container #main_content #report_field #report_content h2:nth-child(2) {
+  display: inline-block;
+}
+#wrapper #container #main_content #report_field #report_content h2:nth-child(1) {
+  margin-right: 80%;
+  margin-left: .5%;
+}
+#wrapper #container #main_content #report_field #report_content h2:nth-child(4) {
+  margin-left: .5%;
+}
+#wrapper #container #main_content #report_field #report_content #report_highchart {
+  height: 300px;
+  min-width: 310px;
+  max-width: 1680px;
+}
+#wrapper #container #main_content #report_field #report_content table {
+  margin: 0px auto;
+}
+#wrapper #container #main_content #report_field #report_content table thead tr {
+  border: 1px solid silver;
+}
+#wrapper #container #main_content #report_field #report_content table thead tr th {
+  width: 180px;
+  padding: 10px 5px;
+}
+#wrapper #container #main_content #report_field #report_content table tbody tr:nth-child(even) {
+  background-color: silver;
+}
+#wrapper #container #main_content #report_field #report_content table tbody tr:nth-child(odd) {
+  background-color: white;
+}
+#wrapper #container #main_content #report_field #report_content table tbody td {
+  border: 1px solid gray;
+  padding: 10px 5px;
+}
+#wrapper #container #main_content #all_account_field {
+  border: 1px solid black;
+  padding: 10px;
+}
+#wrapper #container #main_content #all_account_field #all_account_content h2:first-child,
+#wrapper #container #main_content #all_account_field #all_account_content h2:nth-child(2) {
+  display: none;
+  display: inline-block;
+}
+#wrapper #container #main_content #all_account_field #all_account_content h2:nth-child(1) {
+  margin-right: 69%;
+  margin-left: .5%;
+}
+#wrapper #container #main_content #all_account_field #all_account_content p {
+  margin-left: 10px;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content {
+  padding: 10px;
+  text-align: center;
+  width: 40%;
+  display: inline-block;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content #all_account_piechart {
+  min-width: 310px;
+  height: 300px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content #last_month,
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content #current_month {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 10px;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data {
+  border: 1px solid black;
+  width: 100%;
+  overflow: auto;
+  height: 500px;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data table {
+  width: 100%;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data table thead tr th {
+  padding: 5px 10px;
+}
+#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data table tbody tr td {
+  padding: 10px 10px;
+}
+#wrapper #container #main_content #account_saving_field {
+  padding: 0px 10px;
+}
+#wrapper #container #main_content #account_saving_field h2 {
+  display: inline-block;
+  margin: 0px;
+}
+#wrapper #container #main_content #account_saving_field .saving_date_from {
+  margin-left: 50%;
+}
+#wrapper #container #main_content #account_saving_field .account_append h2 {
+  position: relative;
+  left: 90%;
+  top: -25px;
+}
+#wrapper #container #main_content #account_saving_field #account_saving_content {
+  border-top: 1px solid black;
+  margin-top: -16px;
+}
+#wrapper #container #main_content #account_saving_field #account_saving_content table {
+  width: 100%;
+  margin-top: 10px;
+}
+#wrapper #container #main_content #account_saving_field #account_saving_content table td,
+#wrapper #container #main_content #account_saving_field #account_saving_content table th {
+  padding: 10px;
+}
+#wrapper #container #main_content #account_saving_field #account_saving_content table td {
+  border: 1px solid black;
+}
+#wrapper #container #main_content #account_saving_field #account_saving_content #add_saving_account {
+  margin-left: 91.5%;
+  margin-top: 10px;
+}
+#wrapper #container #main_content #account_checking_field {
+  padding: 0px 10px;
+}
+#wrapper #container #main_content #account_checking_field h2 {
+  display: inline-block;
+  margin: 0px;
+}
+#wrapper #container #main_content #account_checking_field .checking_date_from {
+  margin-left: 50%;
+}
+#wrapper #container #main_content #account_checking_field .account_append h2 {
+  position: relative;
+  left: 90%;
+  top: -25px;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content {
+  margin-top: -16px;
+  border-top: 1px solid black;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content #add_checking_account {
+  margin-left: 91.5%;
+  margin-top: 10px;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content .account_checking_data {
+  margin-top: 20px;
+  width: 99%;
+  display: inline-block;
+  border: 1px solid black;
+  vertical-align: top;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content .account_checking_data:first-child {
+  vertical-align: bottom;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content .account_checking_data:not(:first-child) {
+  margin: 0px 60px;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content .account_checking_data table {
+  width: 100%;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content .account_checking_data table thead tr th {
+  padding: 5px 10px;
+  width: 115px;
+}
+#wrapper #container #main_content #account_checking_field #account_checking_content .account_checking_data table tbody tr td {
+  padding: 5px 10px;
+  width: 115px;
+}
+#wrapper #budget_add_category,
+#wrapper #clone_budget_add_category {
+  margin: 0px auto;
+  top: 20px;
+  padding: 10px;
+  width: 430px;
+  border: 1px solid silver;
+  border-radius: 20px;
+  background-color: #e7e5ec;
+  position: relative;
+}
+#wrapper #budget_add_category .btn-primary,
+#wrapper #clone_budget_add_category .btn-primary {
+  margin-left: 69%;
+}
+#wrapper #budget_add_category table,
+#wrapper #clone_budget_add_category table {
+  margin: 10px 0px;
+}
+#wrapper #budget_add_category table thead tr th,
+#wrapper #clone_budget_add_category table thead tr th {
+  width: 200px;
+}
+#wrapper #budget_add_category table tbody tr:last-child,
+#wrapper #clone_budget_add_category table tbody tr:last-child,
+#wrapper #budget_add_category table tbody tr:first-child,
+#wrapper #clone_budget_add_category table tbody tr:first-child {
+  border-top: 1px solid black;
+}
+#wrapper #budget_add_category table tbody tr td,
+#wrapper #clone_budget_add_category table tbody tr td {
+  padding: 10px 5px;
+}
+#wrapper #budget_add_category .budget_add_subcategories,
+#wrapper #clone_budget_add_category .budget_add_subcategories {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+#wrapper #budget_add_category .budget_add_subcategories input,
+#wrapper #clone_budget_add_category .budget_add_subcategories input {
+  margin: 10px 0px;
+}
+#wrapper #budget_add_category .budget_add_subcategories .btn-primary,
+#wrapper #clone_budget_add_category .budget_add_subcategories .btn-primary {
+  margin-left: 67%;
+}
+#wrapper #user_add_account,
+#wrapper #clone_user_add_account {
+  margin: 0px auto;
+  top: 20px;
+  padding: 10px;
+  width: 430px;
+  border: 1px solid silver;
+  border-radius: 20px;
+  background-color: #e7e5ec;
+  position: relative;
+}
+#wrapper #user_add_account textarea,
+#wrapper #clone_user_add_account textarea {
+  margin-top: 10px;
+}
+#wrapper #user_add_account .btn-primary,
+#wrapper #clone_user_add_account .btn-primary {
+  margin-left: 69%;
+}
+#wrapper #user_add_account .user_add_account_balance,
+#wrapper #clone_user_add_account .user_add_account_balance {
+  padding: 10px;
+}
+#wrapper #user_add_account .user_add_account_balance input,
+#wrapper #clone_user_add_account .user_add_account_balance input {
+  margin: 10px 0px;
+}
+#wrapper #user_checking_account {
+  margin: 0px auto;
+  top: 20px;
+  padding: 10px;
+  width: 430px;
+  border: 1px solid silver;
+  border-radius: 20px;
+  background-color: #e7e5ec;
+  position: relative;
+}
+#wrapper #user_checking_account textarea {
+  margin-top: 10px;
+}
+#wrapper #user_checking_account .btn-primary {
+  margin-left: 69%;
+}
+#wrapper #user_checking_account .user_checking_account_balance {
+  padding: 10px;
+}
+#wrapper #user_checking_account .user_checking_account_balance .form-control {
+  margin: 10px 0px;
+}
+#wrapper #user_saving_account {
+  margin: 0px auto;
+  top: 20px;
+  padding: 10px;
+  width: 430px;
+  border: 1px solid silver;
+  border-radius: 20px;
+  background-color: #e7e5ec;
+  position: relative;
+}
+#wrapper #user_saving_account textarea {
+  margin-top: 10px;
+}
+#wrapper #user_saving_account p {
+  display: inline-block;
+}
+#wrapper #user_saving_account #saving_scheduled_information {
+  display: inline-block;
+  margin-right: 10px;
+}
+#wrapper #user_saving_account #saving_scheduled_input {
+  width: 160px;
+  margin-bottom: 10px;
+}
+#wrapper #user_saving_account .btn-primary {
+  margin-left: 69%;
+}
+#wrapper #user_saving_account .user_saving_account_balance {
+  padding: 10px;
+}
+#wrapper #user_saving_account .user_saving_account_balance .form-control {
+  margin: 10px 0px;
+}
+#wrapper #user_saving_account h2 #add_saving_breakdown {
+  margin-left: 53%;
+}
+#wrapper #user_saving_account .user_saving_breakdown table {
+  margin: 10px 0px;
+}
+#wrapper #user_saving_account .user_saving_breakdown table thead tr th {
+  width: 200px;
+}
+#wrapper #user_saving_account .user_saving_breakdown table tbody tr:first-child {
+  border-top: 1px solid black;
+}
+#wrapper #user_saving_account .user_saving_breakdown table tbody tr td {
+  padding: 10px 5px;
+}
+#wrapper #user_saving_account #saving_account_options {
+  border: 1px solid silver;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+#wrapper #user_saving_account #saving_account_options select {
+  diplay: none;
+  margin-bottom: 10px;
+}
+#wrapper #user_saving_account #saving_account_options input {
+  margin-bottom: 10px;
+}

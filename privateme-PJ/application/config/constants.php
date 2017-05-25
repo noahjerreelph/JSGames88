@@ -29,3 +29,14 @@ define("GOOGLE_CLIENT_SECRET", "6ErOCVlWIyRhDv9Urj_swVMB");
 define("GOOGLE_RETURN_URI", "http://activity.localhost.com/users/authenticate_google_user");
 define("GOOGLE_AUTH_URI", "https://accounts.google.com/o/oauth2/auth?response_type=code&redirect_uri=". urlencode(GOOGLE_RETURN_URI) ."&client_id=". GOOGLE_CLIENT_ID ."&scope=email&approval_prompt=force");
 define("GOOGLE_SITE_NAME", "http://activity.localhost.com");
+
+/* account types*/
+define("CHECKINGS", 1);
+define("SAVINGS", 2);
+
+/* Transaction types */
+define("OUTFLOW", 1);
+define("INFLOW", 2);
+define("WITHDRAW", 3);
+define("DEPOSIT", 4);
+define("DIRECT_PAYMENT", 5);

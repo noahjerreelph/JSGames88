@@ -1,0 +1,578 @@
+#wrapper{
+	width: 100%;
+
+	#header{
+		margin-top: 10px;
+		padding: 10px;
+		border: 1px solid black;
+		height: 50px;
+
+		.agent_dashboard{
+			width: 30px;
+			height: 30px;
+		}
+
+		span{
+			font-size: 15px;
+		}
+	
+		.dashboard_logo{
+			display: inline-block;
+		}
+
+		.dashboard_setting{
+			cursor: pointer;
+			margin-top: 5px;
+			display: inline-block;
+
+			#dropdown_setting{
+				top: 58px;
+			}
+		}
+	}
+
+	#container{
+		position: absolute;
+		width: 100%;
+
+		#left_content{
+			display: inline-block;
+			padding: 10px;
+			width: 10%;
+			
+			li{
+				padding: 5px 10px;
+			}
+
+			#top_navigation{
+				border: 1px solid black;
+				border-bottom: 1px solid black;
+			}
+			#bottom_navigation{
+				padding: 10px;
+				border: 1px solid black;
+				border-bottom: 1px solid black;
+				height: 93vh;
+			}
+		}
+		#main_content{
+			margin-top: 10px;
+			width: 89.77%;
+			display: inline-block;
+			vertical-align: top;
+
+			#budget_field{
+				border: 1px solid black;
+
+				.budget_filter{
+					margin: 20px 0px 20px 75%;
+				}
+
+				#budget_content{
+					height: 100.5vh;
+
+					.budget_data{
+						display: inline-block;
+						border: 1px solid black;
+						vertical-align: top;
+
+						&:first-child{
+							vertical-align: bottom;
+							margin: 0px 20px;
+
+						}
+						&:not(:first-child){
+							margin: 0px 60px;
+						}
+
+						.budget_info{
+							text-align: center;
+							border: 1px solid black;
+
+							h3{
+								margin-top: 10px !important;
+							}
+
+							.budget_date{
+								display: inline-block;
+								width: 40px;
+								margin-right: 110px;
+							}
+							.budget_total{
+								vertical-align: top;
+								display: inline-block;
+								width: 40px;
+								margin-top: 10px;
+							}
+						}
+
+						table{
+							thead{
+								tr{	
+									th{
+										padding: 5px 10px;
+									    width: 115px;
+									}
+								}
+							}
+							tbody{
+								tr{
+
+									td{
+										padding: 5px 10px;
+									    width: 115px;
+									}
+								}						
+							}
+						}
+
+					}
+				}
+			}
+
+			#report_field{
+				border: 1px solid black;
+
+				.report_filter{
+					margin: 20px 0px;
+
+					select{
+						width: 200px !important;
+						display: inline;
+					}
+
+					select:nth-child(1){
+						margin-left: 20px;
+					}
+					select:nth-child(2){
+						margin-right: 52.5%;
+					}
+				}
+				#report_content{
+					padding: 10px;
+
+					h2:nth-child(1), h2:nth-child(2){
+						display: inline-block;
+					}
+
+					h2:nth-child(1){
+						margin-right: 80%;
+						margin-left: .5%;
+					}
+
+					h2:nth-child(4){
+						margin-left: .5%;
+					}
+
+					#report_highchart{
+						height: 300px;
+						min-width: 310px;
+						max-width: 1680px;
+					}
+
+					table{
+						margin: 0px auto;
+						thead{
+							tr{
+								border: 1px solid silver;
+								th{
+									width: 180px;
+									padding: 10px 5px;
+								}
+							}
+						}
+						tbody{
+							tr{
+
+								&:nth-child(even) {
+								  background-color: silver;
+								  // display:none;
+								}
+								&:nth-child(odd) {
+								  background-color: white;
+								}
+							}
+							td{
+								border: 1px solid gray;
+								padding: 10px 5px;
+							}
+						}
+					}
+				}
+			}
+
+			#all_account_field{
+				border: 1px solid black;
+				padding: 10px;	
+				#all_account_content{
+					h2:first-child, h2:nth-child(2){
+						display: none;
+						display: inline-block;
+					}
+
+					h2:nth-child(1){
+						margin-right: 69%;
+						margin-left: .5%;
+					}
+
+					p{
+						margin-left: 10px;
+					}
+
+					#all_account_left_content{
+						padding: 10px;
+						text-align: center;
+						width: 40%;
+						display: inline-block;
+
+						#all_account_piechart{
+							min-width: 310px; 
+							height: 300px; 
+							max-width: 300px;
+							margin: 0 auto;
+						}
+						
+						#last_month, #current_month{
+							display: inline-block;
+							border: 1px solid black;
+							padding: 10px;
+						}
+					}
+					#all_account_right_content{
+						display: inline-block;
+						vertical-align: top;
+						width: 50%;
+
+								
+
+
+						.all_account_data{
+							border: 1px solid black;
+							width: 100%;
+							overflow: auto;
+							height: 500px;
+
+							table{
+								width: 100%;
+
+								thead{
+									tr{
+										th{
+											padding: 5px 10px;
+										}
+									}
+								}
+								tbody{
+									tr{
+										td{
+											padding: 10px 10px;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			#account_saving_field{
+				padding: 0px 10px;
+
+				h2{
+					display: inline-block;
+					margin: 0px;
+				}
+				.saving_date_from{
+				    margin-left: 50%;
+				}
+				.account_append{
+					
+					h2 {
+						position: relative;
+						left: 90%;
+						top: -25px;
+					}
+				}
+				#account_saving_content{
+					border-top: 1px solid black;
+					margin-top: -16px;
+
+					table{
+						width: 100%;
+						margin-top: 10px;
+
+						td, th{
+						    padding: 10px;
+
+						}
+					    td{
+					    	border: 1px solid black;
+					    }
+					}
+					#add_saving_account{
+						margin-left: 91.5%;
+   						margin-top: 10px;
+					}
+				}
+			}
+
+			#account_checking_field{
+				padding: 0px 10px;
+
+				h2{
+					display: inline-block;
+					margin: 0px;
+				}
+
+				.checking_date_from{
+				    margin-left: 50%;
+				}
+				
+				.account_append{
+					h2{
+						position: relative;
+						left: 90%;
+						top: -25px;
+					}
+				}
+
+				#account_checking_content{
+					margin-top: -16px;
+					border-top: 1px solid black;
+
+					#add_checking_account{
+						margin-left:  91.5%;
+						margin-top: 10px;
+					}
+					
+					.account_checking_data{
+						margin-top: 20px;
+						width: 99%;
+						display: inline-block;
+						border: 1px solid black;
+						vertical-align: top;
+
+						&:first-child{
+							vertical-align: bottom;
+						}
+
+						&:not(:first-child){
+							margin: 0px 60px;
+						}
+
+						table{
+							width: 100%;
+
+							thead{
+								tr{	
+									th{
+										padding: 	5px 10px;
+									    width: 115px;
+									}
+								}
+							}
+							tbody{
+								tr{
+									td{
+										padding: 5px 10px;
+									    width: 115px;
+									}
+								}						
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	
+	#budget_add_category, #clone_budget_add_category{
+		margin: 0px auto;
+		top: 20px;
+		padding: 10px;
+		width: 430px;
+		border: 1px solid silver;
+		border-radius: 20px;
+		background-color: #e7e5ec;
+		position: relative;
+
+		& .btn-primary{
+				margin-left: 69%;
+			}
+
+		table{
+			margin: 10px 0px;
+			thead{
+				tr{
+					th{
+						width: 200px;
+					}
+				}
+			}
+			tbody{
+				tr{
+
+					&:last-child, &:first-child{
+						border-top: 1px solid black;
+					}
+					td{
+						padding: 10px 5px;
+					}
+				}
+			}
+		}
+
+		.budget_add_subcategories{
+			border: 1px solid black;
+			padding: 10px;
+			margin-bottom: 10px;
+			input{
+				margin: 10px 0px;
+			}
+
+			.btn-primary{
+				margin-left: 67%;
+			}
+		}
+	}
+
+	#user_add_account, #clone_user_add_account{
+		margin: 0px auto;
+		top: 20px;
+		padding: 10px;
+		width: 430px;
+		border: 1px solid silver;
+		border-radius: 20px;
+		background-color: #e7e5ec;
+		position: relative;
+
+		textarea{
+			margin-top: 10px;
+		}
+
+		.btn-primary{
+			margin-left: 69%;
+		}
+
+		.user_add_account_balance{
+			padding: 10px;
+
+			input{
+				margin: 10px 0px;
+			}
+		}
+	}
+
+	#user_checking_account{
+		margin: 0px auto;
+		top: 20px;
+		padding: 10px;
+		width: 430px;
+		border: 1px solid silver;
+		border-radius: 20px;
+		background-color: #e7e5ec;
+		position: relative;
+
+		textarea{
+			margin-top: 10px;
+		}
+
+		.btn-primary{
+			margin-left: 69%;
+		}
+
+		.user_checking_account_balance{
+			padding: 10px;
+
+			.form-control{
+				margin: 10px 0px;
+			}
+		}
+	}
+
+	#user_saving_account{
+		margin: 0px auto;
+		top: 20px;
+		padding: 10px;
+		width: 430px;
+		border: 1px solid silver;
+		border-radius: 20px;
+		background-color: #e7e5ec;
+		position: relative;
+
+		textarea{
+			margin-top: 10px;
+		}
+
+		p{
+			display: inline-block;
+		}
+
+		#saving_scheduled_information{
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		#saving_scheduled_input{
+			width: 160px;
+			margin-bottom: 10px;
+		}
+
+		.btn-primary{
+			margin-left: 69%;
+		}
+
+		.user_saving_account_balance{
+			padding: 10px;
+
+			.form-control{
+				margin: 10px 0px;
+			}
+		}
+
+		h2{
+			#add_saving_breakdown{
+				margin-left: 53%;
+			}
+		}
+		.user_saving_breakdown{
+			table{
+				margin: 10px 0px;
+				thead{
+					tr{
+						th{
+							width: 200px;
+						}
+					}
+				}
+				tbody{
+					tr{
+
+						&:first-child{
+							border-top: 1px solid black;
+						}
+						td{
+							padding: 10px 5px;
+						}
+					}
+				}
+			}
+		}
+		#saving_account_options{
+			border: 1px solid silver;
+			padding: 10px; 
+			margin-bottom: 10px;
+
+			select{
+				diplay:none;
+				margin-bottom: 10px;
+			}
+			input{
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+}
+	

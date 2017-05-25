@@ -51,5 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'main/index';
 $route['login'] = 'main/login';
+$route['logout'] = 'users/logout';
 $route['dashboard'] = 'main/dashboard';
-$route['404_override'] = 'errors/page_missing';
+$route['account'] = 'main/account';
+#$route['404_override'] = 'errors/page_missing';
