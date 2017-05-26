@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Checker Game</title>
+	<link rel="stylesheet" href="assets/css/index.css">
+
+</head>
+<body>
+	<div id="wrapper">
+		<div id="login_dashboard" style="">
+			<h1>Dama Game</h1>
+			<div id="selection_dashboard">
+				<div id="game_options">
+					<button id="player_1">1 player</button>
+					<button id="player_2">2 player</button>
+				</div>
+				<div id="show_score">
+					<button id="show_player_history_game">Game Records</button>
+					<button>Continue</button>
+				</div>
+			</div>
+			<div id="play_with_AI_dashboard">
+				<h3>Play with AI</h3>
+				<input type="text" id="AI_first_player_name" placeholder="Enter first player name">
+				<select name="" id="ai_diffulty">
+					<option value="1">Easy</option>
+					<option value="2">Medium</option>
+					<option value="3">Hard</option>
+				</select>
+				<div id="AI_start_game">
+					<button id="AI_start_game_start">Start</button>
+					<button id="AI_start_game_cancel">Cancel</button>
+				</div>
+			</div>
+			<div id="play_with_player_2_dashboard">
+				<h3>Play with Friend</h3>
+				<input type="text" id="first_player_name" placeholder="Enter first player name">
+				<input type="text" id="second_player_name" placeholder="Enter second player name">
+				<div id="player_2_start_game">
+					<button id="player_2_start_game_button">Start</button>
+					<button id="play_with_player_2_dashboard_cancel">Cancel</button>
+				</div>
+			</div>
+			<div id="show_game_score">
+				<h3>Dama Game Records</h3>
+				<table id="user_show_score">
+					<thead>
+						<tr>
+							<th>Game No.</th>
+							<th>Game Type</th>
+							<th>Duration</th>
+							<th>Winner</th>
+						</tr>
+					</thead>
+					<tbody id="user_show_score_body">
+						<tr>
+							<td>1</td>
+							<td>Play with Ai</td>
+							<td>2 mins</td>
+							<td>PJ</td>
+						</tr>
+					</tbody>
+				</table>
+				<button id="show_game_score_clear">Clear</button>
+				<button id="show_game_score_cancel">Cancel</button>
+			</div>
+		</div>
+		<div id="game_dashboard" style="display:none">
+			<h1>Dama Game</h1>
+			<div id="left_container">
+				<div id="game_information">
+					<h3>Game No.</h3>
+					<p id="game_stage">1</p>
+					<h3>Time</h3>
+					<p id="time_left">00:00:00</p>
+					<h3>Player</h3>
+					<p id="ingame_player_name">Noah</p>
+				</div>
+				<div id="game_selection">
+					<button>Undo</button>
+					<button id="player_paused_game">Pause</button>
+					<button id="player_continue_game" style="display:none">Continue</button>
+					<button id="player_quit_game" >Quit</button>
+				</div>
+			</div>
+			<div id="main_container">
+				<div id="game"></div>
+			</div>
+			<div id="player_quit_modal" style="display:none">
+				<h3>Do you want to quit?</h3>
+				<button id="player_quit_yes">Yes</button>
+				<button id="player_quit_no">No</button>
+			</div>
+			<div id="player_complete" style="display:none">
+				<h3>Congrats</h3>
+				<h2 id="player_name_won"></h2>
+				<button id="player_complete_yes">Quit</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="assets/js/index.js"></script>
+
+</html>
