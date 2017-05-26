@@ -1,0 +1,146 @@
+*{
+	margin: 0px;
+}
+#wrapper-login, #highscore{
+	margin: 0px auto;
+	width: 400px;
+	text-align: center;
+}
+#wrapper-login h1{
+	font-size: 70px;
+	margin-top: 200px;
+}
+#wrapper-login div input{
+	margin: 10px 20px;
+}
+#wrapper-login #player_name{
+	width: 300px;
+}
+#highscore{
+	border: 1px solid black;
+	height: 350px;
+    position: absolute;
+    top: 150px;
+    left: 500px;
+    padding: 10px;
+}
+#highscore table{
+	width: 400px;
+}
+#highscore table thead{
+	font-weight: bold;
+	font-size: 20px;
+}
+#highscore div{
+	height: 300px;
+}		
+#highscore a, #quit a, #restart a{
+	text-decoration: none;	
+	color: black;
+	padding: 2px 15px;
+	border: 1px solid #A6A6A6;
+	background-color: #F2F2F2;
+	margin: 0px 30px;
+}
+#wrapper-game{
+	position: relative;
+}
+header{
+	border: 1px solid black;
+	padding: 10px;
+	background-color: #CCCCCC;
+}
+header h3, header span, header div{
+	display: inline-block;
+	margin-right: 20px; 
+}
+header div{
+	margin-left: 70%;
+}
+header a{
+	vertical-align: top;
+	margin: 0px 15px;
+	color: black;
+	text-decoration: none;
+}
+#quit, #restart, #pause{
+	border: 1px solid black;
+	padding: 20px;
+	position: absolute;
+	text-align: center;
+	width: 300px;
+    top: 200px;
+    height: 100px;
+    left: 530px;
+    background-color: white;
+}
+#quit h3, #quit p, #restart h3, #restart p{
+	padding: 5px;
+}
+#quit div, #restart div{
+	margin-top: 10px;
+}
+#pause h1{
+	font-size: 50px;
+}
+#score_board{
+	background-color: silver;
+	display: inline-block;
+	height: 500px;
+	margin: 10px;
+	opacity: .3;
+	position: absolute;
+	top: 0px;
+	vertical-align: top;
+	width: 150px;
+    right: 0px;
+    padding: 10px;
+}
+#score_board table{
+	width: 100%;
+}
+#wrapper-game{
+	width: 99.35%;
+	height: 610px;
+	border: 1px solid black;
+	position: absolute;
+    top: 45px;
+    background-color: black;
+}
+.hidden{
+	visibility: hidden;
+}
+.food{
+	background-color: white;
+	width: 9px;
+	height: 9px;
+	position: absolute;
+	border: 1px solid silver;
+	border-radius: 5px;
+}
+.freeze_ups, .shield_ups, .speed_ups, .reverse{
+	background-color: white;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 10px;
+	position: absolute;
+	width: 10px;
+}
+.freeze_ups{	
+	background-image: url('../images/freeze_ups.gif');	
+}
+.shield_ups{
+	background-image: url('../images/shield_ups.gif');
+}
+.speed_ups{
+	background-image: url('../images/speed_ups.gif');
+}
+.reverse{
+	background-image: url('../images/reverse.gif');
+}
+.snake{
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	border-radius: 5px;
+}

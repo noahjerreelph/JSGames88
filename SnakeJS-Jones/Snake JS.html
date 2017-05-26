@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Snake JS</title>
+	<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+	<header class="hidden">
+		<h3>Snake JS</h3>
+		<span>Stage 1</span>
+		<div>
+			<button id="btn-pause">Pause</button>
+			<button id="btn-restart">Restart</button>
+			<button id="btn-quit">Quit</button>
+		</div>
+	</header>
+	<div id="wrapper-login">
+		<h1>Snake JS</h1>
+		<form id="submit_name" action="">
+			<input id="player_name" type="text" name="name" placeholder="Enter player name" maxlength="20">
+			<div>
+				<input id="play" type="submit" name="play" value="Play Game">
+				<input type="submit" name="score" value="High Score">
+			</div>
+		</form>
+	</div>
+	<div id="highscore" class="hidden">
+		<div>
+			<h2>High Score</h2>
+			<table></table>
+		</div>
+			<a id="clear_score" href="#">Clear</a>
+			<a id="close" href="#">Close</a>				
+	</div>
+
+
+	<script src="assets/js/snake.js"></script>
+</body>
+</html>
