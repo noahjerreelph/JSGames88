@@ -52,7 +52,11 @@
 				padding: 10px;
 				border: 1px solid black;
 				border-bottom: 1px solid black;
-				height: 93vh;
+				height: 62vh;
+				#bottom_accounts{
+					overflow: auto;
+					margin-bottom: 40px;
+				}
 			}
 		}
 		#main_content{
@@ -69,12 +73,14 @@
 				}
 
 				#budget_content{
-					height: 100.5vh;
+					height: 65.5vh;
 
 					.budget_data{
 						display: inline-block;
 						border: 1px solid black;
 						vertical-align: top;
+						overflow: auto;
+						height: 600px;
 
 						&:first-child{
 							vertical-align: bottom;
@@ -201,10 +207,14 @@
 				}
 			}
 
-			#all_account_field{
+			#all_accounts_field{
 				border: 1px solid black;
 				padding: 10px;	
+				
 				#all_account_content{
+					overflow: auto;
+					height: 68vh;
+
 					h2:first-child, h2:nth-child(2){
 						display: none;
 						display: inline-block;
@@ -282,8 +292,8 @@
 					display: inline-block;
 					margin: 0px;
 				}
-				.saving_date_from{
-				    margin-left: 50%;
+				h2:first-child{
+					margin-right: 50%;
 				}
 				.account_append{
 					
@@ -323,10 +333,13 @@
 					display: inline-block;
 					margin: 0px;
 				}
-
-				.checking_date_from{
-				    margin-left: 50%;
+				h2:first-child{
+					margin-right: 50%;
 				}
+
+				// .checking_date_from{
+				//     margin-left: 50%;
+				// }
 				
 				.account_append{
 					h2{

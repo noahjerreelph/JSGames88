@@ -45,7 +45,11 @@
   padding: 10px;
   border: 1px solid black;
   border-bottom: 1px solid black;
-  height: 93vh;
+  height: 62vh;
+}
+#wrapper #container #left_content #bottom_navigation #bottom_accounts {
+  overflow: auto;
+  margin-bottom: 40px;
 }
 #wrapper #container #main_content {
   margin-top: 10px;
@@ -60,12 +64,14 @@
   margin: 20px 0px 20px 75%;
 }
 #wrapper #container #main_content #budget_field #budget_content {
-  height: 100.5vh;
+  height: 65.5vh;
 }
 #wrapper #container #main_content #budget_field #budget_content .budget_data {
   display: inline-block;
   border: 1px solid black;
   vertical-align: top;
+  overflow: auto;
+  height: 600px;
 }
 #wrapper #container #main_content #budget_field #budget_content .budget_data:first-child {
   vertical-align: bottom;
@@ -155,58 +161,62 @@
   border: 1px solid gray;
   padding: 10px 5px;
 }
-#wrapper #container #main_content #all_account_field {
+#wrapper #container #main_content #all_accounts_field {
   border: 1px solid black;
   padding: 10px;
 }
-#wrapper #container #main_content #all_account_field #all_account_content h2:first-child,
-#wrapper #container #main_content #all_account_field #all_account_content h2:nth-child(2) {
+#wrapper #container #main_content #all_accounts_field #all_account_content {
+  overflow: auto;
+  height: 68vh;
+}
+#wrapper #container #main_content #all_accounts_field #all_account_content h2:first-child,
+#wrapper #container #main_content #all_accounts_field #all_account_content h2:nth-child(2) {
   display: none;
   display: inline-block;
 }
-#wrapper #container #main_content #all_account_field #all_account_content h2:nth-child(1) {
+#wrapper #container #main_content #all_accounts_field #all_account_content h2:nth-child(1) {
   margin-right: 69%;
   margin-left: .5%;
 }
-#wrapper #container #main_content #all_account_field #all_account_content p {
+#wrapper #container #main_content #all_accounts_field #all_account_content p {
   margin-left: 10px;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_left_content {
   padding: 10px;
   text-align: center;
   width: 40%;
   display: inline-block;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content #all_account_piechart {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_left_content #all_account_piechart {
   min-width: 310px;
   height: 300px;
   max-width: 300px;
   margin: 0 auto;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content #last_month,
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_left_content #current_month {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_left_content #last_month,
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_left_content #current_month {
   display: inline-block;
   border: 1px solid black;
   padding: 10px;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_right_content {
   display: inline-block;
   vertical-align: top;
   width: 50%;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_right_content .all_account_data {
   border: 1px solid black;
   width: 100%;
   overflow: auto;
   height: 500px;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data table {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_right_content .all_account_data table {
   width: 100%;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data table thead tr th {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_right_content .all_account_data table thead tr th {
   padding: 5px 10px;
 }
-#wrapper #container #main_content #all_account_field #all_account_content #all_account_right_content .all_account_data table tbody tr td {
+#wrapper #container #main_content #all_accounts_field #all_account_content #all_account_right_content .all_account_data table tbody tr td {
   padding: 10px 10px;
 }
 #wrapper #container #main_content #account_saving_field {
@@ -216,8 +226,8 @@
   display: inline-block;
   margin: 0px;
 }
-#wrapper #container #main_content #account_saving_field .saving_date_from {
-  margin-left: 50%;
+#wrapper #container #main_content #account_saving_field h2:first-child {
+  margin-right: 50%;
 }
 #wrapper #container #main_content #account_saving_field .account_append h2 {
   position: relative;
@@ -250,8 +260,8 @@
   display: inline-block;
   margin: 0px;
 }
-#wrapper #container #main_content #account_checking_field .checking_date_from {
-  margin-left: 50%;
+#wrapper #container #main_content #account_checking_field h2:first-child {
+  margin-right: 50%;
 }
 #wrapper #container #main_content #account_checking_field .account_append h2 {
   position: relative;

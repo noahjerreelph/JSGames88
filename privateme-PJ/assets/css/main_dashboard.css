@@ -34,9 +34,11 @@
   width: 30%;
 }
 #wrapper #container #left_content #activities {
-  border: 1px solid black;
+  overflow: auto;
+  height: 500px;
 }
 #wrapper #container #left_content #activities ul li {
+  border: 1px solid black;
   margin-bottom: 10px;
   list-style: none;
 }

@@ -33,7 +33,7 @@ class Users extends CI_Controller {
 			$this->session->set_userdata('google_token', $token);	
 			$this->google_token = (object) $token;
 			$user_session = $this->User_model->get_google_user($this->google_token);
-			$this->session->set_userdata($user_session);
+			$this->session->set_userdata("user_data", $user_session);
 		}
 		
 		redirect(base_url());

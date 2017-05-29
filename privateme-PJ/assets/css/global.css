@@ -19,3 +19,9 @@ textarea {
 .glyphicon {
   cursor: pointer;
 }
+.account_negative {
+  color: red;
+}
+.category_head {
+  font-weight: bold;
+}

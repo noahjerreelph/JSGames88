@@ -70,7 +70,6 @@ class User_model extends CI_Model {
 				$data['status'] = $this->insert_user($post_data);
 				$data['user_id'] = $this->db->insert_id();
 
-
 				if($data['status']){
 					$data["user_data"] = $this->get_user(NULL, NULL, $data['user_id']);
 					$this->session->set_userdata("user_data", $data["user_data"]);
@@ -195,38 +194,12 @@ class User_model extends CI_Model {
 					"created_at" 	=> date("Y-m-d H:i:s")
 				);
 
-				// $add_account_type =  array(
-				// 	array(
-				// 		"user_id"       => $post_data["user_id"],
-				// 		"account_id"    => $this->db->insert_id(),
-				// 		"type" 			=> CHECKINGS,
-				// 		"amount" 		=> $post_data["checkings_amount"],
-				// 		"created_at" 	=> date("Y-m-d H:i:s"),
-				// 		"updated_at" 	=> NULL
-				// 		// $insert_user_account_data["type"] 	= CHECKINGS,
-				// 		// $insert_user_account_data["amount"] => $post_data["checkings_amount"],
-				// 	),
-				// 	array(
-				// 		"user_id"       => $post_data["user_id"],
-				// 		"account_id"    => $this->db->insert_id(),
-				// 		"type" 	=> SAVINGS,
-				// 		"amount" 	=> $post_data["savings_amount"],
-				// 		"created_at" 	=> date("Y-m-d H:i:s"),
-				// 		"updated_at" 	=> NULL
-				// 		// $insert_user_account_data["type"] 	=> SAVINGS,
-				// 		// $insert_user_account_data["amount"] => $post_data["savings_amount"],
-				// 	)
-				// );
-				// $insert_account_type = $this->db->insert_batch('account_types', $insert_user_account_data); 
-				
 				for ($i = 1; $i <=2; $i++) { 
 					$insert_user_account_data["type"] 	= (($i == 1) ? CHECKINGS : SAVINGS);
 					$insert_user_account_data["amount"] = (($i == 1) ? $post_data["checkings_amount"] : $post_data["savings_amount"]);
 					
 				 	$this->db->insert('account_types', $insert_user_account_data);		
 				}
-
-
 
 				if($insert_user_account_data){
 					$session_user = $this->get_user(NULL, NULL, $post_data["user_id"]);

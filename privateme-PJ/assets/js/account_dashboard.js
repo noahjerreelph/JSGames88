@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	$('.date_picker_input').datetimepicker({format: 'MM/DD/YYYY'});
+
 	$("body").on("click", "#left_content li", function(){
 		$("#left_content li.active_filter").removeClass("active_filter");
 		$(this).addClass("active_filter");
@@ -114,6 +116,7 @@ $(document).ready(function(){
 		}
 	});
 /* End of adding budget */
+
 /* Checking account*/
 	var is_checking_click = true;
 
@@ -122,7 +125,6 @@ $(document).ready(function(){
 		var clone = $("#user_checking_account").clone().show();
 		clone.addClass("clone_popover");
 		clone.find(".date_picker_input").datetimepicker({format: 'MM/DD/YYYY'});
-
 
 		$("#wrapper").append(clone)
 
@@ -145,7 +147,7 @@ $(document).ready(function(){
 
 	$("body").on("submit", "#checking_account_form", function(){
 		var post_data = $(this).serialize();
-		post_data += "&is_not_scheduled="+is_checking_click+"&account_id="+$("#bottom_navigation .active_filter").closest("ul").attr("data-account-id");
+		post_data += "&is_not_scheduled="+is_checking_click+"&account_id="+$("#bottom_navigation .active_filter").closest("ul").attr("data-account-id")+"&account_type_id="+$("#bottom_navigation .active_filter").attr("data-type-id");
 
 
 		$.post("/main/insert_checking_account", post_data, function(data){
@@ -162,7 +164,6 @@ $(document).ready(function(){
 		$(".clone_popover").remove();
 	})
 
-
 	$("body").on("click", ".clone_popover #checking_checkbox_input", function(){
 		if(is_checking_click == true){
 			$(".clone_popover #checking_scheduled_input").show()
@@ -173,11 +174,6 @@ $(document).ready(function(){
 			is_checking_click = true;
 		}
 	})
- 
-
-	$('#checking_date_to').change(function () {
-    console.log($('#checking_date_to').val());
-});
 /* end of Checking account*/
 
 /* Saving account */
@@ -185,8 +181,7 @@ $(document).ready(function(){
 		var clone = $("#user_saving_account").clone().show();
 		clone.addClass("clone_popover");
 		clone.find(".date_picker_input").datetimepicker({format: 'MM/DD/YYYY'});
-
-
+		
 		$("#wrapper").append(clone)
 	});
 
@@ -214,15 +209,15 @@ $(document).ready(function(){
 
 			for(var i = 1; i <= $(this).find("tbody tr").length; i ++){
 				categories_info[index].sub_categories.push({
-					is_new_sub_category : ($(this).find("tbody tr:nth-child("+i+")").attr("data-is-new")),
-					sub_category_id : $(this).find("tbody tr:nth-child("+i+")").attr("data-id"),
-					sub_category_amount : $(this).find("tbody tr:nth-child("+i+") td:nth-child(2)").text()
+					new_sub_category_name : $(this).find("tbody tr:nth-child("+i+") td:nth-child(1)").text(),
+					sub_category_id : ($(this).find("tbody tr:nth-child("+i+")").attr("data-id")),
+					sub_category_amount : $(this).find("tbody tr:nth-child("+i+") td:nth-child(2)").text(),
+					transcation_type : ($(this).find("tbody tr:nth-child("+i+")").attr("data-type"))
 				})
 			}
-
 		});
 
-		post_data += "&category_info="+ JSON.stringify(categories_info)+"&account_id="+$("#bottom_navigation .active_filter").closest("ul").attr("data-account-id")
+		post_data += "&category_info="+ JSON.stringify(categories_info)+"&account_id="+$("#bottom_navigation .active_filter").closest("ul").attr("data-account-id")+"&account_type_id="+$("#bottom_navigation .active_filter").attr("data-type-id");
 
 		$.post("/main/insert_saving_account", post_data, function(data){
 			if(data){
@@ -234,6 +229,11 @@ $(document).ready(function(){
 
 		return false;
 	});
+
+	$("body").on("change", "#saving_account_type", function(){
+		$(".clone_popover #saving_account_options").hide()
+	})
+
 	var is_click = true;
 
 	$("body").on("click",".clone_popover #saving_scheduled_information", function(){
@@ -250,7 +250,7 @@ $(document).ready(function(){
 	$("body").on("click", ".clone_popover #add_saving_breakdown", function(){
 		$(".clone_popover #saving_account_options").show();
 
-		$.get("/main/get_user_categories", function(data){
+		$.post("/main/get_user_categories", {account_type : $(".clone_popover #saving_account_type").val()},function(data){
 			if(data)
 				$(".clone_popover #insert_saving_account select:nth-child(1)").empty().append(data);
 		}, "json")
@@ -260,6 +260,9 @@ $(document).ready(function(){
 		$.post("/main/get_user_sub_categories", {category_id : $(this).val()}, function(data){
 			if(data)
 				$(".clone_popover #insert_saving_account select:nth-child(2)").empty().append(data);
+			else{
+				$(".clone_popover #insert_saving_account select:nth-child(2)").empty().append('<option value="">Select Sub Category</option><option value="add_new_sub">Add new subcategory</option>');
+			}
 		}, "json")
 	});
 
@@ -289,7 +292,7 @@ $(document).ready(function(){
 			var is_new_sub_categeroy = $(".clone_popover #insert_saving_account select:nth-child(2) option:selected").val() == "add_new_sub" && $("#add_saving_new_subcategory").val() != "";
 
 			$(".clone_popover #category_id_"+$(".clone_popover #insert_saving_account select:nth-child(1) option:selected").val()+" tbody").append("\
-				<tr data-is-new='"+(is_new_sub_categeroy ? "new_sub"  : "")+"' data-id='"+(is_new_sub_categeroy ? $(".clone_popover #add_saving_new_subcategory").val() : $(".clone_popover  #insert_saving_account select:nth-child(2) option:selected").val())+"'>\
+				<tr data-type='"+$(".clone_popover #saving_account_type option:selected").val()+"' data-id='"+(is_new_sub_categeroy ? $(".clone_popover #add_saving_new_subcategory").val() : $(".clone_popover  #insert_saving_account select:nth-child(2) option:selected").val())+"'>\
 					<td>"+($(".clone_popover  #insert_saving_account select:nth-child(2) option:selected").val() == "add_new_sub" && $(".clone_popover #add_saving_new_subcategory").val() != "" ? $(".clone_popover #add_saving_new_subcategory").val() : $(".clone_popover  #insert_saving_account select:nth-child(2) option:selected").text())+"</td>\
 					<td>"+$(".clone_popover #saving_sub_category_amount").val() +"</td>\
 					<td><span class='glyphicon glyphicon-minus remove_saving_subcategory' aria-hidden='true'></span></td>\
@@ -312,7 +315,6 @@ $(document).ready(function(){
 	});
 
 	$("body").on("click", ".remove_saving_subcategory", function(){
-		console.log($(this).closest("table"))
 		if($(this).closest("tbody").children().length - 1 == 0){
 			$(this).closest("table").remove();
 		}
@@ -320,34 +322,44 @@ $(document).ready(function(){
 			$(this).closest("tr").remove();
 		}
 	});
-/* end of Saving account*/
+	var date_from = ""; 
+	$(".checking_date_from, .checking_date_from").datetimepicker({format: 'MM/DD/YYYY'}).on("dp.change", function(){
+		date_from = $(this).val();
+	});
 
-$('body').on("dp.change", ".checking_date_to, .saving_date_to", function(){
-	var dates = $(this);
 
-	if($(dates).val() != "" && $(dates).prev().val() != ""){
-		var post_data = {
-			account_id : $(".user_accounts_selection .active_filter").closest(".user_accounts_selection").attr("data-account-id"), 
-			account_type : $(".user_accounts_selection .active_filter").attr("data-type-id"),
-			date_from : $(dates).prev().val(),
-			date_to : $(dates).val()
+	$('body').on("dp.change", ".checking_date_to, .saving_date_to", function(){
+		var dates = $(this);
+
+		if($(dates).val() != "" && $(dates).prev().val() != ""){
+			var post_data = {
+				account_id : $(".user_accounts_selection .active_filter").closest(".user_accounts_selection").attr("data-account-id"), 
+				account_type_id : $(".user_accounts_selection .active_filter").attr("data-type-id"),
+				date_from : $(dates).prev().val(),
+				date_to : $(dates).val()
+			}
+			
+			$.post("/main/get_user_selected_account", post_data, function(data){
+				if(dates.hasClass("saving_date_to"))
+					$("#account_saving_field .account_append").empty().append(data);
+				else
+					$("#account_checking_field .account_append").empty().append(data);
+				
+				$('.date_picker_input').datetimepicker({format: 'MM/DD/YYYY'});
+			}, "json");
 		}
-
-		$.post("/main/get_user_selected_account", post_data, function(data){
-			$("#account_checking_field .account_append").empty().append(data)
-			$('.date_picker_input').datetimepicker({format: 'MM/DD/YYYY'});
-		}, "json");
-	}
-})
+	})
+/* end of Saving account*/
 
 /* Accounts */
 	$("body").on("click", ".user_accounts_selection li", function(){
 		var account = ($(this).attr("data-type-id") == 1) ? "#account_checking_field" : "#account_saving_field";
 
+		$(".content_field").hide();
 		$(account).show();
 		$(account).siblings().hide();
 
-		$.post("/main/get_user_selected_account", {account_id : $(this).closest(".user_accounts_selection").attr("data-account-id"), account_type : $(this).attr("data-type-id") }, function(data){
+		$.post("/main/get_user_selected_account", {account_id : $(this).closest(".user_accounts_selection").attr("data-account-id"), account_type_id : $(this).attr("data-type-id") }, function(data){
 			$(account+" .account_append").empty().append(data)
    			$('.date_picker_input').datetimepicker({format: 'MM/DD/YYYY'});
 		}, "json");
@@ -356,151 +368,196 @@ $('body').on("dp.change", ".checking_date_to, .saving_date_to", function(){
 
 /* All Acoounts */
 	$("body").on("click", "#account_nav", function(){
-		$("#all_account_field").show();
+		$(".content_field").hide();
+		$("#all_accounts_field").show();
 
-		$.post("/main/get_all_accounts_overview", {}, function(data){
-
-		})
+		get_all_account(1);
 	});
 
+	$("body").on("change", "#all_account_option", function(){
+		get_all_account($(this).val());
+	});
 /* End of All Acoounts */
+
+/* Report */
+	$("body").on("click", "#report_nav", function(){
+		$(".content_field").hide();
+		$("#report_field").show();
+
+
+		$.post("/main/get_reports_overview", {}, function(data){
+			$("#report_content table tbody").empty().append(data.accounts);
+			$("#report_field #report_filter_all_account").empty().append(data.all_accounts);
+		}, "json");
+
+		reports_chart_object.chart.renderTo = "report_highchart";
+        new Highcharts.Chart(reports_chart_object);
+	});
+
+	$("body").on("submit", "#report_form", function(){
+
+	});
+/* End of Report */
+
+/* Budget */
+	$("#budget_field").show();
+	
+	$("body").on("click", "#budget_nav", function(){
+		$(".content_field").hide();
+		$("#budget_field").show();
+	});
+
+	$("body").on("submit", "#budget_filter", function(){
+
+		$.post("/main/get_user_budgets", $(this).serialize(), function(data){
+			$("#budget_content").empty().append(data)
+		}, "json");
+
+		return false;
+	})
+/* Budget */
 	document.getElementById("add_account_exit").onclick = function(){
 		document.getElementById("user_add_account").style.display = "none";
 	}
 
-	document.getElementById("budget_nav").onclick = function(){
-		document.getElementById("budget_field").style.display = "block";
-	}
-
-
-	var chart = Highcharts.chart('report_highchart', {
-	    chart: {
-	        type: 'column'
-	    },
-
-	    title: {
-	        text: 'Highcharts responsive chart'
-	    },
-
-	    subtitle: {
-	        text: 'Resize the frame or click buttons to change appearance'
-	    },
-
-	    legend: {
-	        align: 'right',
-	        verticalAlign: 'middle',
-	        layout: 'vertical'
-	    },
-
-	    xAxis: {
-	        categories: ['Apples', 'Oranges', 'Bananas'],
-	        labels: {
-	            x: -10
-	        }
-	    },
-
-	    yAxis: {
-	        allowDecimals: false,
-	        title: {
-	            text: 'Amount'
-	        }
-	    },
-
-	    series: [{
-	        name: 'Christmas Eve',
-	        data: [1, 4, 3]
-	    }, {
-	        name: 'Christmas Day before dinner',
-	        data: [6, 4, 2]
-	    }, {
-	        name: 'Christmas Day after dinner',
-	        data: [8, 4, 3]
-	    }],
-
-	    responsive: {
-	        rules: [{
-	            condition: {
-	                maxWidth: 500
-	            },
-	            chartOptions: {
-	                legend: {
-	                    align: 'center',
-	                    verticalAlign: 'bottom',
-	                    layout: 'horizontal'
-	                },
-	                yAxis: {
-	                    labels: {
-	                        align: 'left',
-	                        x: 0,
-	                        y: -5
-	                    },
-	                    title: {
-	                        text: null
-	                    }
-	                },
-	                subtitle: {
-	                    text: null
-	                },
-	                credits: {
-	                    enabled: false
-	                }
-	            }
-	        }]
-	    }
-	});
-
-	Highcharts.chart('all_account_piechart', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        exporting: { enabled: false },
-        title: {
-            text: 'Browser market shares January, 2015 to May, 2015'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: false
-                },
-                showInLegend: true
-            }
-        },
-        series: [{
-            name: 'Brands',
-            colorByPoint: true,
-            data: [{
-                name: 'Microsoft Internet Explorer',
-                y: 56.33
-            }, {
-                name: 'Chrome',
-                y: 24.03,
-                sliced: true,
-                selected: true
-            }, {
-                name: 'Firefox',
-                y: 10.38
-            }, {
-                name: 'Safari',
-                y: 4.77
-            }, {
-                name: 'Opera',
-                y: 0.91
-            }, {
-                name: 'Proprietary or Undetectable',
-                y: 0.2
-            }]
-        }]
-    });
-
-
     $('.date_picker_input').datetimepicker({format: 'MM/DD/YYYY'});
 
 });
+
+
+var all_account_chart_object = {
+	chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    exporting: { enabled: false },
+    title: {},
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: false
+            },
+            showInLegend: true
+        }
+    },
+    series: []
+}
+
+var reports_chart_object = {
+    chart: {
+        type: 'column'
+    },
+
+    title: {
+        text: 'Highcharts responsive chart'
+    },
+
+    legend: {
+        align: 'right',
+        verticalAlign: 'middle',
+        layout: 'vertical'
+    },
+
+    xAxis: {
+        categories: ['Apples', 'Oranges'],
+        labels: {
+            x: -10
+        }
+    },
+
+    yAxis: {
+        allowDecimals: false,
+        title: {
+            text: 'Amount'
+        }
+    },
+
+    series: [{
+        name: 'Christmas Eve',
+        data: [1, 4]
+    }, {
+        name: 'Christmas Day before dinner',
+        data: [6, 4]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    layout: 'horizontal'
+                },
+                yAxis: {
+                    labels: {
+                        align: 'left',
+                        x: 0,
+                        y: -5
+                    },
+                    title: {
+                        text: null
+                    }
+                },
+                subtitle: {
+                    text: null
+                },
+                credits: {
+                    enabled: false
+                }
+            }
+        }]
+    }
+};
+
+function get_all_account(account_type){
+	$.post("/main/get_all_accounts_overview", {account_type : account_type}, function(data){
+		$("#all_account_field").empty().append(data.partial);
+
+		$(".account_content tbody tr:last-child").each(function(index, data){
+			var account_amount_total = $(this).closest(".account_content").children("h2:nth-child(2)").attr("data-account-total");
+			$(this).closest("#all_account_right_content").siblings("#all_account_left_content").children("#current_month").children("h3:nth-child(2)").html(account_amount_total - ($(this).attr("data-total-category")) )
+		})
+
+		for (var key in data.chart_data){
+			var container = "all_account_piechart_"+key;
+			var categories = [];
+			var chart_addseries = [];
+
+			for (var category in data.chart_data[key].category_graph){
+				categories.push( {
+                    "name": data.chart_data[key].category_graph[category].sub_category_name,
+                    "y" :   data.chart_data[key].category_graph[category].sub_category_amount
+            	});
+			}
+
+			for(var chart_info in categories){
+				chart_addseries.push({
+					"name" : categories[chart_info].name,
+					"y"    :  parseInt(categories[chart_info].y),
+				})
+    	    }
+
+			all_account_chart_object.chart.renderTo = container;
+            new Highcharts.Chart(all_account_chart_object);
+
+    	    var chart = $("#"+container).highcharts();
+    	    
+			chart.setTitle({ text: data.chart_data[key].transaction_date });
+            chart.addSeries({
+				name: 'Total',
+				colorByPoint: true,
+				data: chart_addseries
+			});
+		}
+	}, "json")
+}

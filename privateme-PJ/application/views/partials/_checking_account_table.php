@@ -15,7 +15,7 @@
 
 		<? foreach ($accounts as $key => $account) {  ?>
 				<tr>
-					<td><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span><?=$key ?></td>
+					<td><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><?=$key ?></td>
 					<td></td>
 					<td></td>
 					<td></td>		
