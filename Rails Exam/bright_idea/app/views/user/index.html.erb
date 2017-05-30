@@ -1,0 +1,57 @@
+<div id="welcome">
+	<h1>Welcome!</h1>
+	<h2 id="success"><%= flash[:success] if flash[:success] != nil %></h2>
+	<div id="register">
+		<h2>Register</h2>
+		<form action="/register" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div>
+				<p>Name:</p>
+				<input type="text" name="user[name]">
+			</div>
+			<div>
+				<p>Alias:</p>
+				<input type="text" name="user[alias]">
+			</div>
+			<div>
+				<p>Email:</p>
+				<input type="text" name="user[email]">
+			</div>
+			<div>
+				<p>Password:</p>
+				<input type="password" name="user[password]">
+			</div>
+				<span>*Password should be at least 8 charaters</span>
+			<div>
+				<p>Confirm Password:</p>
+				<input type="password" name="user[password_confirmation]">
+			</div>
+			<div>
+				<input class="submit-btn" type="submit" value="Register">
+			</div>
+				<% 	if flash[:error] != nil
+						flash[:error].each do |error| %>
+							<p class="error"><%= error %></p>
+				<% 		end
+					end %>
+		</form>
+	</div>
+	<div id="login">
+		<h2>Login</h2>
+		<form action="/login" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div>
+				<p>Email:</p>
+				<input type="text" name="user[email]">
+			</div>
+			<div>
+				<p>Password:</p>
+				<input type="password" name="user[password]">
+			</div>
+				<p class="error"><%= "#{flash[:login_error] if flash[:login_error] != nil}" %></p>
+			<div>
+				<input class="submit-btn" type="submit" value="Login">
+			</div>
+		</form>
+	</div>
+</div>

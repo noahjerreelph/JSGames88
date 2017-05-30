@@ -1,0 +1,24 @@
+<%= render "partial/header" %>
+<div id="like">
+	<div class="post-idea">
+		<div>
+			<span><a href="/users/<%= @post.user.id %>"><%= @post.user.alias %></a> says:</span>
+		</div>
+		<textarea disabled cols="70" rows="5"><%= @post.idea %></textarea>
+	</div>
+	<h3>People who liked this post:</h3>
+	<table border="1">
+		<tr>
+			<td>Alias</td>
+			<td>Name</td>
+		</tr>
+		<% 	if @liker != nil
+				@liker.each do |like| %>
+		<tr>
+			<td><a href="/users/<%= like.liker.id %>"><%= like.liker.alias %></a></td>
+			<td><%= like.liker.name %></td>
+		</tr>
+			<% 	end 
+			end %>
+	</table>
+</div>

@@ -1,0 +1,85 @@
+#wrapper h1{
+	margin-bottom: 30px;
+}
+#register, #login{
+    border: 1px solid black;
+    padding: 20px;
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    margin: 0px 30px;
+}
+#register h2, #login h2{
+	position: absolute;
+    top: 100px;
+    background: white;
+    padding: 0px 10px;
+}
+#success{
+	color: green;
+	height: 25px;
+	margin: 20px 50px;
+}
+#login .error{
+	text-align: center !important;
+}
+.error{
+	height: 20px;
+	display: block !important;
+	color: red;
+	margin: 5px 40px;
+}
+#register div p, #login div p{   
+	display: inline-block;
+	margin: 5px;
+	width: 150px;
+}
+.submit-btn{
+	padding: 5px 10px;
+	margin-left: 280px
+}
+header{
+	padding: 0px 20px;
+	text-align: right;
+}
+header h3{
+    display: inline-block;
+    margin-right: 1125px; 
+}
+header a{
+	margin-left: 10px; 
+}
+#wall, #like, #user{
+	margin: 30px auto;
+    width: 900px;
+}
+#wall #ideas{
+    margin: 20px auto;
+    width: 700px;
+}
+#wall input{
+	vertical-align: top;
+}
+textarea{
+	resize: none;
+}
+#wall #ideas .post-idea div, #like .post-idea div{
+	display: inline-block;
+	vertical-align: top;
+}
+#wall #ideas .post-idea p{
+	margin: 5px 100px 40px;
+}
+#wall #ideas .post-idea p a{
+	margin: 0px 10px;
+}
+table{
+	width: 300px;
+}
+table td{
+	padding: 5px 10px;
+}
+#user div{
+	border-top: 2px solid black;
+    margin-top: 50px;
+}

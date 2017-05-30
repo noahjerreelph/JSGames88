@@ -1,0 +1,38 @@
+<header>
+	<h3>Hi <%= session[:user]['alias'] %>!</h3><a href="/logout">Logout</a>
+</header>
+<div id="wall">
+	<div id="post">
+		<form action="/bright_ideas/post" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<input type="hidden" name="post[id]" value="<%= session[:user]['id'] %>">
+			<textarea name="post[idea]" cols="100" rows="2" placeholder="Post something witty here.."></textarea>
+			<input type="submit" value="Idea!">
+		</form>
+	</div>
+	<div id="ideas">
+	<% 	if @post != nil
+			@post.each do |post| %>
+
+		<div class="post-idea">
+			<div>
+				<span><a href="/users/<%= post.user_id %>"><%= post.user.alias %></a> says:</span>
+			</div>
+			<div>
+				<textarea disabled cols="70" rows="5"><%= post.idea %></textarea>
+				<p>
+					<a data-method="post"  href="/bright_ideas/like/<%= post.user.id %>/<%= post.id %>">Like</a> 
+					<a href="/bright_ideas/<%= post.id %>"><%= post.like.group_by{ |i| i[:like] }.count %> people</a> like this
+				</p>
+			</div>
+			<% if session[:user]['id'] == post.user.id %>
+				<div>
+					<span><a data-method="delete" href="/bright_ideas/<%= post.id %>/destroy">delete</a></span>
+				</div>
+			<% end %>
+		</div>
+
+		<%	end
+		end %>
+	</div>
+</div>
