@@ -1,0 +1,24 @@
+<%= render "partial/header" %>
+<div id="borrower">
+	<p>Name: <strong><%= "#{@user['first_name']} #{@user['last_name']}" %></strong></p>
+	<p>Amount Needed: <strong><%= "#{@user['money']}" %></strong></p>
+	<p>Amount Raised: <strong><%= "#{@user['raised']}" %></strong></p>
+
+	<h3>List of people who lend you money:</h3>
+	<table border="1">
+		<tr>
+			<td>Name</td>
+			<td>Email</td>
+			<td>Amount Lent</td>
+		</tr>
+<% if @lender != nil
+		@lender.each do |lend| %>
+		<tr>
+			<td><%= "#{lend.lender.first_name} #{lend.lender.last_name}" %></td>
+			<td><%= lend.lender.email %></td>
+			<td><%= lend.amount %></td>
+		</tr>
+<% 		end
+	end %>
+	</table>
+</div>

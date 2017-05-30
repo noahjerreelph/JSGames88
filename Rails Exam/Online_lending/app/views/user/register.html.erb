@@ -1,0 +1,89 @@
+<div id="register">
+	<div id="lend">
+		<h1>Lender</h1>
+		<form action="/create" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div>
+				<p>First Name:</p>
+				<input type="text" name="user[first_name]">
+			</div>
+			<div>
+				<p>Last Name:</p>
+				<input type="text" name="user[last_name]">
+			</div>
+			<div>
+				<p>Email:</p>
+				<input type="text" name="user[email]">
+			</div>
+			<div>
+				<p>Password:</p>
+				<input type="password" name="user[password]">
+			</div>
+			<div>
+				<p>Confirm Password:</p>
+				<input type="password" name="user[password_confirmation]">
+			</div>
+			<div>
+				<p>Money:</p>
+				<input type="number" name="user[money]" min="0">
+			</div>
+			<div>
+				<input type="hidden" name="user[status]" value="0">
+				<a href="/">Already a member?</a>
+				<input class="btn" type="submit" value="Register">
+			</div>
+		</form>
+	</div>
+	<div id="messages">
+		<h3 class="success"><%= flash[:success] if flash[:success] != nil %></h3>
+		<% 	if flash[:error] != nil %>
+			<% flash[:error].each do |error| %>		
+				<p class="error"><%= error %></p>
+			<% 	end %>
+		<%	end %>
+	</div>
+	<div id="borrow">
+		<h1>Borrower</h1>
+		<form action="/create" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div>
+				<p>First Name:</p>
+				<input type="text" name="user[first_name]">
+			</div>
+			<div>
+				<p>Last Name:</p>
+				<input type="text" name="user[last_name]">
+			</div>
+			<div>
+				<p>Email:</p>
+				<input type="text" name="user[email]">
+			</div>
+			<div>
+				<p>Password:</p>
+				<input type="password" name="user[password]">
+			</div>
+				<div>
+				<p>Confirm Password:</p>
+				<input type="password" name="user[password_confirmation]">
+			</div>
+			<div>
+				<p>Need Money for:</p>
+				<input type="text" name="user[purpose]">
+			</div>
+			<div>
+				<p>Description:</p>
+				<textarea name="user[description]" rows="5" cols="25"></textarea>
+			</div>
+			<div>
+				<p>Amount Needed:</p>
+				<input type="number" name="user[money]" min="0">
+			</div>
+			<div>
+				<input type="hidden" name="user[status]" value="1">
+				<input type="hidden" name="user[raised]" value="0">
+				<a href="/">Already a member?</a>
+				<input class="btn" type="submit" value="Register">
+			</div>
+		</form>
+	</div>
+</div>

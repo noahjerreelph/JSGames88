@@ -1,0 +1,63 @@
+<%= render "partial/header" %>
+<div id="lender">
+	<p>Name: <strong><%= "#{@user['first_name']} #{@user['last_name']}" %></strong></p>
+	<p>Account Balance: <strong><%= "#{@user['money']}" %></strong></p>
+
+	<h3>List of people who are need of help:</h3>
+	<table border="1">
+		<tr>
+			<td>Name</td>
+			<td>Monney Needed For</td>
+			<td>Description</td>
+			<td>Amount Needed</td>
+			<td>Amount Raised</td>
+			<td>Action</td>
+		</tr>
+		<%	if @borrower != nil
+		 		@borrower.each do |borrow|
+		 			if borrow.raised.to_i < borrow.money.to_i 	%>
+		<tr>
+			<td><%= "#{borrow.first_name} #{borrow.last_name}" %></td>
+			<td><%= "#{borrow.purpose}" %></td>
+			<td><%= "#{borrow.description}" %></td>
+			<td><%= "#{borrow.money}" %></td>
+			<td><%= "#{borrow.raised}" %></td>
+			<td>
+				<form action="/lending/<%= borrow.id %>" method="post">
+					<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+					<input class="num-btn" type="number" name="lend[amount]" min="0" max="<%= "#{@user['money']}" %>">
+					<input type="hidden" name="lend[raised]" value="<%= "#{borrow.raised}" %>">
+					<input type="hidden" name="lend[money]" value="<%= "#{@user['money']}" %>">
+					<input type="hidden" name="lend[id]" value="<%= "#{@user['id']}" %>">
+					<input type="submit" value="Lend">
+				</form>
+			</td>
+		</tr>
+		<% 			end
+				end
+			end %>
+	</table>
+	<h3>List of people You lend money to:</h3>
+	<table border="1">
+		<tr>
+			<td>Name</td>
+			<td>Monney Needed For</td>
+			<td>Description</td>
+			<td>Amount Needed</td>
+			<td>Amount Raised</td>
+			<td>Ammount Lent</td>
+		</tr>
+		<%	if @lended != nil
+		 		@lended.each do |lended| %>
+		<tr>
+			<td><%= "#{lended.borrower.first_name} #{lended.borrower.last_name}" %></td>
+			<td><%= "#{lended.borrower.purpose}" %></td>
+			<td><%= "#{lended.borrower.description}" %></td>
+			<td><%= "#{lended.borrower.money}" %></td>
+			<td><%= "#{lended.borrower.raised}" %></td>
+			<td><%= "#{lended.amount}" %></td>
+		</tr>
+		<% 		end
+			end %>
+	</table>
+</div>

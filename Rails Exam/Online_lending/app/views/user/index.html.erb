@@ -1,0 +1,19 @@
+<div id="login">
+	<h1>Login</h1>
+	<div>
+		<form action="/login" method="post">
+			<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+			<div>
+				<p>Email:</p>
+				<input type="text" name="user[email]">
+			</div>
+			<div>
+				<p>Password:</p>
+				<input type="password" name="user[password]">
+			</div>
+				<p id="login-error" class="error"><%= flash[:login] if flash[:login] != nil %></p>
+				<a href="/register">Click here to register</a>
+				<input class="btn" type="submit" value="Login">
+		</form>
+	</div>
+</div>

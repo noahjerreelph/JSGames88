@@ -1,0 +1,83 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+#wrapper{
+	padding: 30px;
+}
+#login h1,#borrow h1,#lend h1{
+	margin-bottom: 30px;
+}
+.error{
+	display: block !important;
+	color: red;
+	width: 300px !important;
+}
+#login p, #register p{
+	display: inline-block;
+	width: 115px;
+	margin: 10px;
+	vertical-align: top;
+}
+.btn{
+	margin-left: 150px;
+	padding: 5px 10px;
+}
+#lend,#borrow{
+	display: inline-block;
+	margin: 0px 20px;
+	vertical-align: top;
+}
+
+#lend div:last-child,#borrow div:last-child{
+	margin-top: 50px;
+}
+textarea{
+	resize: none;
+}
+#error{
+	border: 1px solid black;
+	width: 300px;
+	display: inline-block;
+	padding: 10px;
+	color: red;
+}
+header{
+	text-align: right;
+}
+#borrower p,#lender p{
+	margin: 10px 0px;
+}
+#borrower h3,#lender h3{
+	margin-top: 50px;
+	margin-bottom: 20px;
+}
+#borrower table{
+	width: 400px;
+	margin-left: 40px;
+}
+#lender table{
+	width: 900px;
+	margin-left: 40px;
+}
+#borrower table td,#lender table td{
+	padding: 3px 5px;
+}
+.num-btn{
+	width: 50px;
+}
+.success{
+	color: green;
+	margin: 10px;
+	height: 20px;
+	text-align: center;
+	display: inline-block;
+}
+#messages{
+	width: 300px;
+	padding: 20px;
+	display: inline-block;
+}
+#login-error{
+	text-align: center;
+}
